@@ -1,35 +1,43 @@
 import React from 'react';
-
-import {Button, TextInput} from "./styles.js"
+import { TextInput, Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle, InputContainer} from "./styles.js"
 
 const Login = () => {
   return (
-    <>
-      <TextInput
-        placeholder="Nome de usuário"
-        underlineColorAndroid="#e6e7e8"
-      />
+    <Container>
+      <Header>
+        <HeaderTitle>
+          Login
+        </HeaderTitle>
+      </Header>
+      <LoginSection>
+        <InputContainer>
+          <TextInput
+            placeholder="Nome de usuário"
+            underlineColorAndroid="#e6e7e8"
+          />
+        </InputContainer>
+        <InputContainer>
+        
+          <TextInput
+            placeholder="Senha"
+            underlineColorAndroid="#e6e7e8"
+          />
+        </InputContainer>
 
-      <TextInput
-        placeholder="Senha"
-        underlineColorAndroid="#e6e7e8"
-      />
+        <SingInButton color="#88c9bf" textColor="#434343">
+          ENTRAR
+        </SingInButton>
+      </LoginSection>
+      <SocialSection>
+        <Button color="#194f7c" textColor="#f7f7f7">
+          ENTRAR COM FACEBOOK
+        </Button>
 
-      <Button
-          title="ENTRAR"
-          color="#88c9bf"
-      />
-
-      <Button
-          title="ENTRAR COM FACEBOOK"
-          color="#194f7c"
-      />
-
-      <Button
-          title="ENTRAR COM GOOGLE"
-          color="#f15f5c"
-      />
-    </>
+        <Button color="#f15f5c" textColor="#f7f7f7">
+          ENTRAR COM GOOGLE
+        </Button>
+      </SocialSection>
+    </Container>
   );
 };
 
