@@ -1,16 +1,17 @@
 import React from 'react';
 import {
   SafeAreaView,
-  Text,
   StatusBar,
 } from 'react-native';
+
+import Login from "./pages/Login/index.js"
 
 const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <Text>Test</Text>
+        <Login/>
       </SafeAreaView>
     </>
   );
