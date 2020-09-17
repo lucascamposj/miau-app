@@ -5,7 +5,7 @@ import {
   View
 } from 'react-native';
 
-import Login from "./pages/Login/index.js"
+import RegisterPerson from "./pages/RegisterPerson/index.js"
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#88c9bf"/>
         <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
 
-          <Login/>
+          <RegisterPerson/>
         </View>
     </>
   );
