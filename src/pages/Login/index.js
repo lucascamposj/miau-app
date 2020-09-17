@@ -13,14 +13,12 @@ const Login = () => {
         <InputContainer>
           <TextInput
             placeholder="Nome de usuário"
-            underlineColorAndroid="#e6e7e8"
           />
         </InputContainer>
         <InputContainer>
         
           <TextInput
             placeholder="Senha"
-            underlineColorAndroid="#e6e7e8"
           />
         </InputContainer>
 
