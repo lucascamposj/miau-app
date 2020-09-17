@@ -35,8 +35,8 @@ export const Button = styled(ButtonStyle)`
     text-align: center;
     font-size: 12px;
     margin: 8px auto;
-    width: 232; 
-    height: 40;
+    width: 232px; 
+    height: 40px;
     font-family: 'Roboto-Regular';
 `;
 
@@ -44,9 +44,9 @@ export const SingInButton = styled(ButtonStyle)`
     text-align: center;
     font-size: 12px;
     margin: 8px auto;
-    margin-top: 52;
-    width: 232; 
-    height: 40;
+    margin-top: 52px;
+    width: 232px; 
+    height: 40px;
     font-family: 'Roboto-Regular';
 `;
 
@@ -55,13 +55,12 @@ export const InputContainer = styled.View`
     width: 312px;
     border-bottom-color: #e6e7e8;
     border-bottom-width: 2px;
-    /* border-bottom-: 1px solid '#000'; */
 `;
 
 export const TextInput = styled.TextInput`
     padding: 15px;
     text-align: left;
     color: #bdbdbd;
-    font-size: 14;
+    font-size: 14px;
     font-family: 'Roboto-Regular';
 `;

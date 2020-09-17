@@ -18,5 +18,5 @@ export const Container = styled(RectButton)`
 export const ButtonText = styled.Text`
   font-family: 'Roboto-Medium';
   color: ${props => (props.textColor) ? props.textColor : '#f7f7f7'};
-  font-size: 12;
+  font-size: 12px;
 `;
