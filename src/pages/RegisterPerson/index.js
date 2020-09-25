@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextInput, ScrollView, Container, InfoBox, InfoSection, InfoContent, SectionTitle, SectionSeparator, Button, Header, HeaderTitle, InputContainer, PictureBox, PictureText, PictureIcon} from "./styles.js"
+import { ScrollView, Container, InfoBox, InfoSection, InfoContent, SectionTitle, SectionSeparator, Button, Header, HeaderTitle, PictureBox, PictureText, PictureIcon} from "./styles.js"
+import Input from './../../components/Input'
 
 const RegisterPerson = () => {
   return (
@@ -22,68 +23,53 @@ const RegisterPerson = () => {
             <SectionTitle>
                 INFORMAÇÕES PESSOAIS
             </SectionTitle>
-            <InputContainer>
-            <TextInput
+           
+            <Input
                 placeholder="Nome completo"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="Idade"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="E-mail"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="Estado"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="Cidade"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="Endereço"
             />
-            </InputContainer>
-            <InputContainer>
             
-            <TextInput
+            <Input
                 placeholder="Telefone"
             />
-            </InputContainer>
         </SectionSeparator>
 
         <SectionSeparator>
             <SectionTitle>
                 INFORMAÇÕES DE PERFIL
             </SectionTitle>
-            <InputContainer>
-            <TextInput
+        
+            <Input
                 placeholder="Nome de usuário"
             />
-            </InputContainer>
-            <InputContainer>
-            <TextInput
+           
+            <Input
                 placeholder="Senha"
             />
-            </InputContainer>
-            <InputContainer>
-            <TextInput
+            
+            <Input
                 placeholder="Confirmação de senha"
             />
-            </InputContainer>
+            
         </SectionSeparator>
 
         <SectionSeparator>

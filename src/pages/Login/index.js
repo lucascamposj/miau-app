@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextInput, Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle, InputContainer} from "./styles.js"
+import { Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle} from "./styles.js"
+import Input from './../../components/Input'
 
 const Login = () => {
   return (
@@ -10,17 +11,14 @@ const Login = () => {
         </HeaderTitle>
       </Header>
       <LoginSection>
-        <InputContainer>
-          <TextInput
-            placeholder="Nome de usuário"
-          />
-        </InputContainer>
-        <InputContainer>
         
-          <TextInput
-            placeholder="Senha"
-          />
-        </InputContainer>
+        <Input
+          placeholder="Nome de usuário"
+        />
+        
+        <Input
+          placeholder="Senha"
+        />
 
         <SingInButton color="#88c9bf" textColor="#434343">
           ENTRAR

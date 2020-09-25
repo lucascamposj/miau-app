@@ -5,7 +5,8 @@ import {
   View
 } from 'react-native';
 
-import RegisterPerson from "./pages/RegisterPerson/index.js"
+import RegisterAnimal from "./pages/RegisterAnimal/index.js"
+
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#88c9bf"/>
         <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
 
-          <RegisterPerson/>
+          <RegisterAnimal/>
         </View>
     </>
   );

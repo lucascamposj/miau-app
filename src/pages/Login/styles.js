@@ -49,18 +49,3 @@ export const SingInButton = styled(ButtonStyle)`
     height: 40px;
     font-family: 'Roboto-Regular';
 `;
-
-export const InputContainer = styled.View`
-    margin: 0 auto;
-    width: 312px;
-    border-bottom-color: #e6e7e8;
-    border-bottom-width: 2px;
-`;
-
-export const TextInput = styled.TextInput`
-    padding: 15px;
-    text-align: left;
-    color: #bdbdbd;
-    font-size: 14px;
-    font-family: 'Roboto-Regular';
-`;

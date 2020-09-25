@@ -15,7 +15,7 @@ export const Container = styled.View`
 export const Header = styled.View`
   padding: 24px;
   padding-top: ${getStatusBarHeight() + 24}px;
-  background: #cfe9e5;
+  background: #ffd358;
   height:  ${getStatusBarHeight() + 24 + 56}px;
 
   flex-direction: row;
@@ -30,42 +30,40 @@ export const HeaderTitle = styled.Text`
   line-height: 28px;
 `;
 
-export const SectionTitle = styled.Text`
-  color: #88C9BF;
+export const HeaderTextField = styled.Text`
+  color: #757575;
   font-size: 14px;
   font-family: 'Roboto-Regular';
+  margin: 16px 0 16px 0;
 `;
 
-export const InfoSection = styled.View`
-    margin-top: 16px;
-`;
-
-export const InfoBox = styled.View`
-  background: #cfe9e5;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px;
-`;
-
-export const InfoContent = styled.Text`
+export const PageText = styled.Text`
   color: #434343;
-  font-size: 14px;
-  text-align: center;
+  font-size: 16px;
+  font-family: 'Roboto-Medium';
+`;
+
+export const SectionTitle = styled.Text`
+  color: #f7a800;
+  font-size: 12px;
   font-family: 'Roboto-Regular';
+  margin: 20px 0;
 `;
 
-export const SectionSeparator = styled.View`
-    margin-top: 28px;
-`;
-
-export const Button = styled(ButtonStyle)`
+export const ToggleButton = styled(ButtonStyle)`
     text-align: center;
     font-size: 12px;
-    margin: 24px auto;
-    width: 232px; 
+    margin: 24px 0;
+    width: 96px; 
     height: 40px;
     font-family: 'Roboto-Regular';
+    background-color: #ffd358;
+`;
+
+export const ToggleButtonContainer = styled.View`
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const PictureBox = styled.View`
