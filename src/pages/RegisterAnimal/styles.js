@@ -66,6 +66,27 @@ export const ToggleButtonContainer = styled.View`
   justify-content: space-between;
 `;
 
+export const RadioButtonContainer = styled.View`
+  display: flex; 
+  flex-direction: row;
+  margin: 16px 0 32px 0;
+`;
+
+export const CheckBoxContainer = styled.View`
+  display: flex; 
+  flex-direction: row;
+  margin: 16px 0 32px 0;
+`;
+
+export const Button = styled(ButtonStyle)`
+    text-align: center;
+    font-size: 12px;
+    margin: 8px auto;
+    width: 232px; 
+    height: 40px;
+    font-family: 'Roboto-Regular';
+`;
+
 export const PictureBox = styled.View`
   background: #e6e7e7;
   width: 128px;
