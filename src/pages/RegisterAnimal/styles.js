@@ -50,16 +50,6 @@ export const SectionTitle = styled.Text`
   margin: 20px 0;
 `;
 
-export const ToggleButton = styled(ButtonStyle)`
-    text-align: center;
-    font-size: 12px;
-    margin: 24px 0;
-    width: 96px; 
-    height: 40px;
-    font-family: 'Roboto-Regular';
-    background-color: #ffd358;
-`;
-
 export const ToggleButtonContainer = styled.View`
   display: flex; 
   flex-direction: row;

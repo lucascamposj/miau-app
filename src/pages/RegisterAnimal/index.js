@@ -1,10 +1,19 @@
-import React from 'react';
-import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, ToggleButton, Header, HeaderTitle, PictureBox, PictureText, PictureIcon} from "./styles.js"
-import Input from './../../components/Input'
-import RadioButton from './../../components/RadioButton'
-import CheckBox from './../../components/CheckBox'
+import React, {useState, useEffect} from 'react';
+import { Alert } from 'react-native';
+import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, Header, HeaderTitle, PictureBox, PictureText, PictureIcon} from "./styles.js";
+import ToggleButton from './../../components/ToggleButton';
+import Input from './../../components/Input';
+import RadioButton from './../../components/RadioButton';
+import CheckBox from './../../components/CheckBox';
 
 const RegisterAnimal = () => {
+
+  // Form type state
+  const [formType, setFormType] = useState('adocao')
+
+  // Animal data state
+  const [animal, setAnimal] = useState({})
+  
   return (
     <Container>
       <Header>
@@ -19,16 +28,16 @@ const RegisterAnimal = () => {
         </HeaderTextField>   
 
         <ToggleButtonContainer> 
-            <ToggleButton textColor = '#434343'>
-            ADOÇÃO
+            <ToggleButton textColor='#434343' selected={formType === 'adocao'} onPress={() => setFormType('adocao')}>
+              ADOÇÃO
             </ToggleButton>
 
-            <ToggleButton textColor = '#434343'>
-            APADRINHAR
+            <ToggleButton textColor = '#434343' selected={formType === 'apadrinhar'} onPress={() => setFormType('apadrinhar')}>
+              APADRINHAR
             </ToggleButton>
 
-            <ToggleButton textColor = '#434343'>
-            AJUDA
+            <ToggleButton textColor = '#434343' selected={formType === 'ajuda'} onPress={() => setFormType('ajuda')}>
+              AJUDA
             </ToggleButton>
         </ToggleButtonContainer>  
 
