@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "184402914742",
+    "firebase_url": "https://miau-app-a37ec.firebaseio.com",
+    "project_id": "miau-app-a37ec",
+    "storage_bucket": "miau-app-a37ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184402914742:android:9ce39ed8958f7cf828e517",
+        "android_client_info": {
+          "package_name": "com.miau_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184402914742-rhvvblmr0pm00gfql3hrrdp86v4961gk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miau_app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "184402914742-au5mltbfun2dheilj34e4vqqqj97h0gg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3YfB9wW6cy-sQsbn8DjOWf5PU6y31wAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184402914742-au5mltbfun2dheilj34e4vqqqj97h0gg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
