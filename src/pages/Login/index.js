@@ -1,8 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle} from "./styles.js"
-import Input from './../../components/Input'
+import Input from '../../components/Input'
+import auth from '@react-native-firebase/auth';
 
 const Login = () => {
+
+  // Login data state
+  const [login, setLogin] = useState({})
+
+  const SignIn  = async (email, password) => {
+    try {
+      await auth().signInWithEmailAndPassword(email, password);
+      setLogin(prev => ({...prev, authenticated: true}))
+    } catch (e) {
+      console.error(e.message)
+    }
+  }
+
+  const SignOut = () => {
+    auth().signOut().then(() => console.log('User signed out!'));
+  }
+
   return (
     <Container>
       <Header>
@@ -14,13 +32,16 @@ const Login = () => {
         
         <Input
           placeholder="Nome de usuário"
+          onChangeText={(text) => setLogin(prev => ({...prev, username: text}))}
         />
         
         <Input
           placeholder="Senha"
+          secureTextEntry={true}
+          onChangeText={(text) => setLogin(prev => ({...prev,password: text}))}
         />
 
-        <SingInButton color="#88c9bf" textColor="#434343">
+        <SingInButton color="#88c9bf" textColor="#434343" onPress={() => SignIn(login.username, login.password)} >
           ENTRAR
         </SingInButton>
       </LoginSection>

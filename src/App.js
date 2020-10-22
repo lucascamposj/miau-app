@@ -5,7 +5,7 @@ import {
   View
 } from 'react-native';
 
-import FilterResults from "./pages/FilterResults/index.js"
+import Login from "./pages/Login/index.js"
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#88c9bf"/>
         <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
 
-          <FilterResults/>
+          <Login/>
         </View>
     </>
   );
