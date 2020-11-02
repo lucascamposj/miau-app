@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Alert, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, Header, HeaderTitle, PictureBox, PictureText, PictureIcon } from "./styles.js";
 import ToggleButton from './../../components/ToggleButton';
 import Input from './../../components/Input';
 import RadioButton from './../../components/RadioButton';
 import CheckBox from './../../components/CheckBox';
+import firestore from '@react-native-firebase/firestore';
 
 const RegisterAnimal = () => {
 
@@ -12,7 +12,63 @@ const RegisterAnimal = () => {
   const [formType, setFormType] = useState('adocao')
 
   // Animal data state
-  const [animal, setAnimal] = useState({})
+  const [animal, setAnimal] = useState({
+      personality : {
+        brincalhao : false,
+        timido: false,
+        calmo: false
+      },
+    temper : {
+      guarda : false,
+      amoroso: false,
+      preguiçoso: false
+    }
+})
+
+  const getTitle = useCallback(
+    () => {
+    if (formType === "adocao"){
+      return "Adoção"
+    }
+
+    if (formType === "apadrinhar"){
+      return "Apadrinhar"
+    }
+
+    if (formType === "ajuda"){
+      return "Ajudar"
+    }
+  }, [formType])
+
+  const setAnimalInfo = useCallback(
+    (key, value) => {
+     setAnimal(animal => {
+       animal[key] = value
+       return {...animal}})
+    }, [setAnimal]
+  )
+
+  const setAnimalCheckBox = useCallback(
+    (field, value) => {
+     setAnimal(animal => {
+       animal[field][value] = !animal[field][value]
+       return {...animal}})
+    }, [setAnimal]
+  )
+
+  const submit = useCallback(
+    () => {
+      firestore()
+      .collection('animal')
+      .add({formType, ...animal})
+      .then(() => {
+        console.log('Animal added!');
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }, [formType, animal]
+  )
 
   return (
     <Container>
@@ -29,20 +85,20 @@ const RegisterAnimal = () => {
 
         <ToggleButtonContainer>
           <ToggleButton textColor='#434343' selected={formType === 'adocao'} onPress={() => setFormType('adocao')}>
-            <Text>ADOÇÃO</Text>
+            ADOÇÃO
           </ToggleButton>
 
           <ToggleButton textColor='#434343' selected={formType === 'apadrinhar'} onPress={() => setFormType('apadrinhar')}>
-            <Text>APADRINHAR</Text>
+            APADRINHAR
           </ToggleButton>
 
           <ToggleButton textColor='#434343' selected={formType === 'ajuda'} onPress={() => setFormType('ajuda')}>
-            <Text>AJUDA</Text>
+            AJUDA
           </ToggleButton>
         </ToggleButtonContainer>
 
         <PageText>
-          Apadrinhar
+          {getTitle()}
         </PageText>
 
         <SectionTitle>
@@ -51,7 +107,12 @@ const RegisterAnimal = () => {
 
         <Input
           placeholder="Nome do animal"
+          onChangeText={(value) => setAnimal(animal => ({
+                                        ...animal, 
+                                        name: value}))}
         />
+
+        {console.log(animal)}
 
         <SectionTitle>
           FOTOS DO ANIMAL
@@ -69,8 +130,8 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <RadioButtonContainer>
-          <RadioButton selected={false}>Cachorro</RadioButton>
-          <RadioButton selected={true}>Gato</RadioButton>
+          <RadioButton selected={animal.type === "cachorro"} onPress={() => setAnimalInfo("type", "cachorro")}>Cachorro</RadioButton>
+          <RadioButton selected={animal.type === "gato"} onPress={() => setAnimalInfo("type", "gato")}>Gato</RadioButton>
         </RadioButtonContainer>
 
         <SectionTitle>
@@ -78,8 +139,8 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <RadioButtonContainer>
-          <RadioButton selected={false}>Macho</RadioButton>
-          <RadioButton selected={true}>Fêmea</RadioButton>
+          <RadioButton selected={animal.sex === "macho"} onPress={() => setAnimalInfo("sex", "macho")}>Macho</RadioButton>
+          <RadioButton selected={animal.sex === "femea"} onPress={() => setAnimalInfo("sex", "femea")}>Fêmea</RadioButton>
         </RadioButtonContainer>
 
         <SectionTitle>
@@ -87,9 +148,9 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <RadioButtonContainer>
-          <RadioButton selected={false}>Pequeno</RadioButton>
-          <RadioButton selected={true}>Médio</RadioButton>
-          <RadioButton selected={false}>Grande</RadioButton>
+          <RadioButton selected={animal.size === "pequeno"} onPress={() => setAnimalInfo("size", "pequeno")}>Pequeno</RadioButton>
+          <RadioButton selected={animal.size === "medio"} onPress={() => setAnimalInfo("size", "medio")}>Médio</RadioButton>
+          <RadioButton selected={animal.size === "grande"} onPress={() => setAnimalInfo("size", "grande")}>Grande</RadioButton>
         </RadioButtonContainer>
 
         <SectionTitle>
@@ -97,9 +158,9 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <RadioButtonContainer>
-          <RadioButton selected={false}>Filhote</RadioButton>
-          <RadioButton selected={true}>Adulto</RadioButton>
-          <RadioButton selected={false}>Idoso</RadioButton>
+          <RadioButton selected={animal.age === "filhote"} onPress={() => setAnimalInfo("age", "filhote")}>Filhote</RadioButton>
+          <RadioButton selected={animal.age === "adulto"} onPress={() => setAnimalInfo("age", "adulto")}>Adulto</RadioButton>
+          <RadioButton selected={animal.age === "idoso"} onPress={() => setAnimalInfo("age", "idoso")}>Idoso</RadioButton>
         </RadioButtonContainer>
 
         <SectionTitle>
@@ -107,15 +168,15 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <CheckBoxContainer>
-          <CheckBox selected={true}>Brincalhão</CheckBox>
-          <CheckBox selected={false}>Tímido</CheckBox>
-          <CheckBox selected={false}>Calmo</CheckBox>
+          <CheckBox selected={animal.personality.brincalhao} onPress={() => setAnimalCheckBox("personality", "brincalhao")}>Brincalhão</CheckBox>
+          <CheckBox selected={animal.personality.timido} onPress={() => setAnimalCheckBox("personality", "timido")}>Tímido</CheckBox>
+          <CheckBox selected={animal.personality.calmo} onPress={() => setAnimalCheckBox("personality", "calmo")}>Calmo</CheckBox>
         </CheckBoxContainer>
 
         <CheckBoxContainer>
-          <CheckBox selected={false}>Guarda</CheckBox>
-          <CheckBox selected={true}>Amoroso</CheckBox>
-          <CheckBox selected={false}>Preguiçoso</CheckBox>
+          <CheckBox selected={animal.temper.guarda} onPress={() => setAnimalCheckBox("temper", "guarda")}>Guarda</CheckBox>
+          <CheckBox selected={animal.temper.amoroso} onPress={() => setAnimalCheckBox("temper", "amoroso")}>Amoroso</CheckBox>
+          <CheckBox selected={animal.temper.preguiçoso} onPress={() => setAnimalCheckBox("temper", "preguiçoso")}>Preguiçoso</CheckBox>
         </CheckBoxContainer>
 
         <SectionTitle>
@@ -135,6 +196,8 @@ const RegisterAnimal = () => {
         <Input
           placeholder="Doenças do animal"
         />
+
+      {/* Sessão para Adoção apenas! */}
 
         <SectionTitle>
           EXIGÊNCIAS PARA ADOÇÃO
@@ -157,9 +220,11 @@ const RegisterAnimal = () => {
           placeholder="Compartilhe a história do animal"
         />
 
-        <Button color="#ffd358" textColor="#f7f7f7">
+        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
           COLOCAR PARA ADOÇÃO
         </Button>
+
+        {/* Fim da Sessão para Adoção! */}
 
       </ScrollView>
     </Container >
