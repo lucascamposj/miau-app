@@ -12,6 +12,7 @@ const Login = () => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
       setLogin(prev => ({...prev, authenticated: true}))
+      console.log("Logged in!")
     } catch (e) {
       console.error(e.message)
     }
