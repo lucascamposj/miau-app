@@ -8,21 +8,14 @@ const RegisterPerson = () => {
     // person state
   const [person, setPerson] = useState()
 
-  const setPersonInfo = useCallback(
-    (key, value) => {
-     setPerson(person => {
-       person[key] = value
-       return {...person}})
-    }, [setPerson]
-  )
-
   const submit = useCallback(
     () => {
       firestore()
       .collection('usuario')
       .add({person})
-      .then(() => {
-        console.log('Person added!');
+      .then((doc) => {
+        console.log('Person added! ID:');
+        console.log(doc.id)
       })
       .catch((error) => {
         console.log(error);
