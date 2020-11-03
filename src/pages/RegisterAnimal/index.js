@@ -119,8 +119,6 @@ const RegisterAnimal = () => {
                                         name: value}))}
         />
 
-        {console.log(animal)}
-
         <SectionTitle>
           FOTOS DO ANIMAL
         </SectionTitle>
