@@ -5,6 +5,7 @@ import Input from './../../components/Input';
 import RadioButton from './../../components/RadioButton';
 import CheckBox from './../../components/CheckBox';
 import firestore from '@react-native-firebase/firestore';
+import {View} from 'react-native';
 
 const RegisterAnimal = () => {
 
@@ -18,11 +19,17 @@ const RegisterAnimal = () => {
         timido: false,
         calmo: false
       },
-    temper : {
-      guarda : false,
-      amoroso: false,
-      preguiçoso: false
-    }
+      temper : {
+        guarda : false,
+        amoroso: false,
+        preguiçoso: false
+      },
+      health : {
+        vacinado : false,
+        vermifugado: false,
+        castrado: false,
+        doente: false
+      }
 })
 
   const getTitle = useCallback(
@@ -184,21 +191,25 @@ const RegisterAnimal = () => {
         </SectionTitle>
 
         <CheckBoxContainer>
-          <CheckBox selected={true}>Vacinado</CheckBox>
-          <CheckBox selected={false}>Vermifugado</CheckBox>
+          <CheckBox selected={animal.health.vacinado} onPress={() => setAnimalCheckBox("health", "vacinado")}>Vacinado</CheckBox>
+          <CheckBox selected={animal.health.vermifugado} onPress={() => setAnimalCheckBox("health", "vermifugado")}>Vermifugado</CheckBox>
         </CheckBoxContainer>
 
         <CheckBoxContainer>
-          <CheckBox selected={false}>Castrado</CheckBox>
-          <CheckBox selected={false}>Doente</CheckBox>
+          <CheckBox selected={animal.health.castrado} onPress={() => setAnimalCheckBox("health", "castrado")}>Castrado</CheckBox>
+          <CheckBox selected={animal.health.doente} onPress={() => setAnimalCheckBox("health", "doente")}>Doente</CheckBox>
         </CheckBoxContainer>
 
         <Input
           placeholder="Doenças do animal"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            diseases: value}))}
         />
 
       {/* Sessão para Adoção apenas! */}
-
+      { formType === "adocao" ?
+      <View>
         <SectionTitle>
           EXIGÊNCIAS PARA ADOÇÃO
         </SectionTitle>
@@ -223,8 +234,79 @@ const RegisterAnimal = () => {
         <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
           COLOCAR PARA ADOÇÃO
         </Button>
-
+       
+        </View>
+        : <View></View>}
         {/* Fim da Sessão para Adoção! */}
+
+        {/* Sessão para Apadrinhamento apenas! */}
+      { formType === "apadrinhar" ?
+      <View>
+        <SectionTitle>
+          EXIGÊNCIAS PARA APADRINHAMENTO
+        </SectionTitle>
+
+        <CheckBox selected={false}>Termo de apadrinhamento</CheckBox>
+        <CheckBox selected={false}>Auxílio financeiro</CheckBox>
+        
+
+        <CheckBox selected={false}>Alimentação</CheckBox>
+        <CheckBox selected={false}>Saúde</CheckBox>
+        <CheckBox selected={false}>Objetos</CheckBox>
+
+        <CheckBox selected={false}>Visitas ao animal</CheckBox>
+
+        <SectionTitle>
+          SOBRE O ANIMAL
+        </SectionTitle>
+
+        <Input
+          placeholder="Compartilhe a história do animal"
+        />
+
+        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
+          PROCURAR PADRINHO
+        </Button>
+       
+        </View>
+        : <View></View>}
+        {/* Fim da Sessão para Apadrinhamento! */}
+
+        {/* Sessão para Ajuda apenas! */}
+      { formType === "ajuda" ?
+      <View>
+        <SectionTitle>
+          NECESSIDADES DO ANIMAL
+        </SectionTitle>
+
+        <CheckBox selected={false}>Alimento</CheckBox>
+        <CheckBox selected={false}>Auxílio financeiro</CheckBox>
+        <CheckBox selected={false}>Medicamento</CheckBox>
+        <Input
+          placeholder="Nome do medicamento"
+        />
+        
+
+        <CheckBox selected={false}>Objetos</CheckBox>
+        <Input
+          placeholder="Especifique o(s) objeto(s)"
+        />
+        
+        <SectionTitle>
+          SOBRE O ANIMAL
+        </SectionTitle>
+
+        <Input
+          placeholder="Compartilhe a história do animal"
+        />
+
+        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
+          PROCURAR AJUDA
+        </Button>
+       
+        </View>
+        : <View></View>}
+        {/* Fim da Sessão para Ajuda! */}
 
       </ScrollView>
     </Container >
