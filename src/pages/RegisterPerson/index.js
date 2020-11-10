@@ -1,47 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ScrollView, Container, InfoBox, InfoSection, InfoContent, SectionTitle, SectionSeparator, Button, Header, HeaderTitle, PictureBox, PictureText, PictureIcon} from "./styles.js"
+import { ScrollView, Container, InfoBox, InfoSection, InfoContent, SectionTitle, SectionSeparator, Button, PictureBox, PictureText, PictureIcon} from "./styles.js"
 import Input from './../../components/Input'
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import {useAuth} from '../../hooks/auth'
 
 const RegisterPerson = () => {
-    // person state
+  // hooks context
+  const {signUp} = useAuth()
+
+  // person state
   const [person, setPerson] = useState()
-
-  const submit = useCallback(
-    () => {
-      firestore()
-      .collection('usuario')
-      .add({person})
-      .then((doc) => {
-        console.log('Person added! ID:');
-        console.log(doc.id)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    }, [person]
-  )
-
-  const CreatenSignIn = useCallback(
-    async () => {
-    try {
-      await auth().createUserWithEmailAndPassword(person.email, person.password);
-      console.log("Created and Logged in!")
-      submit()
-    } catch (e) {
-      console.error(e.message)
-    }
-  }, [person]
-  )
 
   return (
     <Container>
-      <Header>
-        <HeaderTitle>
-          Cadastro Pessoal
-        </HeaderTitle>
-      </Header>
       <ScrollView>
         <InfoSection>
             <InfoBox>
@@ -146,7 +116,7 @@ const RegisterPerson = () => {
         </SectionSeparator>
 
         <SectionSeparator>
-            <Button color="#88c9bf" textColor="#434343" onPress={() => CreatenSignIn()}>
+            <Button color="#88c9bf" textColor="#434343" onPress={() => signUp(person)}>
                 FAZER CADASTRO
             </Button>
         </SectionSeparator>

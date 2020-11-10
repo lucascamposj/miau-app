@@ -6,23 +6,6 @@ export const Container = styled.View`
     flex: 1;
 `;
 
-export const Header = styled.View`
-  padding: 24px;
-  padding-top: ${getStatusBarHeight() + 24}px;
-  background: #cfe9e5;
-  height:  ${getStatusBarHeight() + 24 + 56}px;
-
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const HeaderTitle = styled.Text`
-  color: #434343;
-  font-size: 20px;
-  font-family: 'Roboto-Medium';
-  line-height: 28px;
-`;
 export const LoginSection = styled.View`
     margin-top: 64px;
 `;
