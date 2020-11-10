@@ -59,9 +59,13 @@ export const AuthProvider = ({ children }) => {
     [setData],
   );
 
+  const signUp = useCallback((data) => {
+    setData({user: data});
+  },[setData]);
+
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser, loading }}
+      value={{ user: data.user, signIn, signOut, updateUser, loading, signUp }}
     >
       {children}
     </AuthContext.Provider>
