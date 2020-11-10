@@ -29,6 +29,27 @@ const RegisterAnimal = () => {
         vermifugado: false,
         castrado: false,
         doente: false
+      },
+      adoption : {
+        terms : false,
+        housePhotos: false,
+        previousVisit: false,
+        postAdoptionFollowup: false,
+        followupMonths: 0
+      },
+      sponsorship : {
+        terms : false,
+        financialSupport: false,
+        food: false,
+        health: false,
+        objects: false,
+        visits: false
+      },
+      help : {
+        food : false,
+        financialSupport: false,
+        medication: false,
+        objects: false
       }
 })
 
@@ -59,6 +80,20 @@ const RegisterAnimal = () => {
     (field, value) => {
      setAnimal(animal => {
        animal[field][value] = !animal[field][value]
+       return {...animal}})
+    }, [setAnimal]
+  )
+
+  const setAnimalCheckBoxValue = useCallback(
+    (field, key, value) => {
+     setAnimal(animal => {
+       if (animal[field][key] === value) {
+          animal[field][key] = 0
+       }
+       else {
+          animal[field][key] = value
+       }
+       
        return {...animal}})
     }, [setAnimal]
   )
@@ -212,14 +247,14 @@ const RegisterAnimal = () => {
           EXIGÊNCIAS PARA ADOÇÃO
         </SectionTitle>
 
-        <CheckBox selected={false}>Termo de adoção</CheckBox>
-        <CheckBox selected={false}>Fotos da casa</CheckBox>
-        <CheckBox selected={false}>Visita prévia ao animal</CheckBox>
-        <CheckBox selected={false}>Acompanhamento pós adoção</CheckBox>
+        <CheckBox selected={animal.adoption.terms} onPress={() => setAnimalCheckBox("adoption", "terms")}>Termo de adoção</CheckBox>
+        <CheckBox selected={animal.adoption.housePhotos} onPress={() => setAnimalCheckBox("adoption", "housePhotos")}>Fotos da casa</CheckBox>
+        <CheckBox selected={animal.adoption.previousVisit} onPress={() => setAnimalCheckBox("adoption", "previousVisit")}>Visita prévia ao animal</CheckBox>
+        <CheckBox selected={animal.adoption.postAdoptionFollowup} onPress={() => setAnimalCheckBox("adoption", "postAdoptionFollowup")}>Acompanhamento pós adoção</CheckBox>
 
-        <CheckBox selected={false}>1 mês</CheckBox>
-        <CheckBox selected={false}>3 meses</CheckBox>
-        <CheckBox selected={false}>6 meses</CheckBox>
+        <CheckBox selected={animal.adoption.followupMonths === 1} onPress={() => setAnimalCheckBoxValue("adoption", "followupMonths", 1)}>1 mês</CheckBox>
+        <CheckBox selected={animal.adoption.followupMonths === 3} onPress={() => setAnimalCheckBoxValue("adoption", "followupMonths", 3)}>3 meses</CheckBox>
+        <CheckBox selected={animal.adoption.followupMonths === 6} onPress={() => setAnimalCheckBoxValue("adoption", "followupMonths", 6)}>6 meses</CheckBox>
 
         <SectionTitle>
           SOBRE O ANIMAL
@@ -227,6 +262,9 @@ const RegisterAnimal = () => {
 
         <Input
           placeholder="Compartilhe a história do animal"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            history: value}))}
         />
 
         <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
@@ -244,15 +282,15 @@ const RegisterAnimal = () => {
           EXIGÊNCIAS PARA APADRINHAMENTO
         </SectionTitle>
 
-        <CheckBox selected={false}>Termo de apadrinhamento</CheckBox>
-        <CheckBox selected={false}>Auxílio financeiro</CheckBox>
+        <CheckBox selected={animal.sponsorship.terms} onPress={() => setAnimalCheckBox("sponsorship", "terms")}>Termo de apadrinhamento</CheckBox>
+        <CheckBox selected={animal.sponsorship.financialSupport} onPress={() => setAnimalCheckBox("sponsorship", "financialSupport")}>Auxílio financeiro</CheckBox>
         
 
-        <CheckBox selected={false}>Alimentação</CheckBox>
-        <CheckBox selected={false}>Saúde</CheckBox>
-        <CheckBox selected={false}>Objetos</CheckBox>
+        <CheckBox selected={animal.sponsorship.food} onPress={() => setAnimalCheckBox("sponsorship", "food")}>Alimentação</CheckBox>
+        <CheckBox selected={animal.sponsorship.health} onPress={() => setAnimalCheckBox("sponsorship", "health")}>Saúde</CheckBox>
+        <CheckBox selected={animal.sponsorship.objects} onPress={() => setAnimalCheckBox("sponsorship", "objects")}>Objetos</CheckBox>
 
-        <CheckBox selected={false}>Visitas ao animal</CheckBox>
+        <CheckBox selected={animal.sponsorship.visits} onPress={() => setAnimalCheckBox("sponsorship", "visits")}>Visitas ao animal</CheckBox>
 
         <SectionTitle>
           SOBRE O ANIMAL
@@ -260,6 +298,9 @@ const RegisterAnimal = () => {
 
         <Input
           placeholder="Compartilhe a história do animal"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            history: value}))}
         />
 
         <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
@@ -277,17 +318,24 @@ const RegisterAnimal = () => {
           NECESSIDADES DO ANIMAL
         </SectionTitle>
 
-        <CheckBox selected={false}>Alimento</CheckBox>
-        <CheckBox selected={false}>Auxílio financeiro</CheckBox>
-        <CheckBox selected={false}>Medicamento</CheckBox>
+        <CheckBox selected={animal.help.food} onPress={() => setAnimalCheckBox("help", "food")}>Alimento</CheckBox>
+        <CheckBox selected={animal.help.financialSupport} onPress={() => setAnimalCheckBox("help", "financialSupport")}>Auxílio financeiro</CheckBox>
+        <CheckBox selected={animal.help.medication} onPress={() => setAnimalCheckBox("help", "medication")}>Medicamento</CheckBox>
+        
         <Input
           placeholder="Nome do medicamento"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            medicationName: value}))}
         />
         
-
-        <CheckBox selected={false}>Objetos</CheckBox>
+        <CheckBox selected={animal.help.objects} onPress={() => setAnimalCheckBox("help", "objects")}>Objetos</CheckBox>
+        
         <Input
           placeholder="Especifique o(s) objeto(s)"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            objectsExpecification: value}))}
         />
         
         <SectionTitle>
@@ -296,6 +344,9 @@ const RegisterAnimal = () => {
 
         <Input
           placeholder="Compartilhe a história do animal"
+          onChangeText={(value) => setAnimal(animal => ({
+            ...animal, 
+            history: value}))}
         />
 
         <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>

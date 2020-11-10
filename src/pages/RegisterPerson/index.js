@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, Container, InfoBox, InfoSection, InfoContent, SectionTitle, SectionSeparator, Button, Header, HeaderTitle, PictureBox, PictureText, PictureIcon} from "./styles.js"
 import Input from './../../components/Input'
 import firestore from '@react-native-firebase/firestore';
-
+import auth from '@react-native-firebase/auth';
 
 const RegisterPerson = () => {
     // person state
@@ -21,6 +21,18 @@ const RegisterPerson = () => {
         console.log(error);
       })
     }, [person]
+  )
+
+  const CreatenSignIn = useCallback(
+    async () => {
+    try {
+      await auth().createUserWithEmailAndPassword(person.email, person.password);
+      console.log("Created and Logged in!")
+      submit()
+    } catch (e) {
+      console.error(e.message)
+    }
+  }, [person]
   )
 
   return (
@@ -134,7 +146,7 @@ const RegisterPerson = () => {
         </SectionSeparator>
 
         <SectionSeparator>
-            <Button color="#88c9bf" textColor="#434343" onPress={() => submit()}>
+            <Button color="#88c9bf" textColor="#434343" onPress={() => CreatenSignIn()}>
                 FAZER CADASTRO
             </Button>
         </SectionSeparator>

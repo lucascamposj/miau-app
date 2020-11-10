@@ -2,17 +2,29 @@ import React, {useState} from 'react';
 import { Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle} from "./styles.js"
 import Input from '../../components/Input'
 import auth from '@react-native-firebase/auth';
+//import firestore from '@react-native-firebase/firestore';
 
 const Login = () => {
 
   // Login data state
   const [login, setLogin] = useState({})
 
+  // User data
+  //const [person, setPerson] = useState({})
+
   const SignIn  = async (email, password) => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
       setLogin(prev => ({...prev, authenticated: true}))
       console.log("Logged in!")
+
+      // RETRIEVE USER INFORMATION
+
+     /* const userDocument = firestore()
+      .collection('usuario')
+      .doc('ABC');
+      // doc will be the user UID
+      */
     } catch (e) {
       console.error(e.message)
     }
