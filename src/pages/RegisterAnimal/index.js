@@ -6,14 +6,18 @@ import RadioButton from './../../components/RadioButton';
 import CheckBox from './../../components/CheckBox';
 import firestore from '@react-native-firebase/firestore';
 import {View} from 'react-native';
+import {useAuth} from '../../hooks/auth'
 
 const RegisterAnimal = () => {
+   // hooks context
+   const {user} = useAuth()
 
   // Form type state
   const [formType, setFormType] = useState('adocao')
 
   // Animal data state
   const [animal, setAnimal] = useState({
+      owner: user.uid,
       personality : {
         brincalhao : false,
         timido: false,

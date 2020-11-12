@@ -36,8 +36,14 @@ export const AuthProvider = ({ children }) => {
         .collection('usuario')
         .doc(doc.user.uid)
         .get();
-        console.log("User data: ", user._data.data);
+
+        // set UID
+        user._data.data.uid = doc.user.uid
+
+        // set state
         setData({user: user._data.data});
+
+        console.log("User data: ", user._data.data);
         
         await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(user._data.data));
       } catch (e) {
@@ -91,10 +97,14 @@ export const AuthProvider = ({ children }) => {
           console.log(error);
         })
 
+        // set UID to data
+        data.uid = login.user.uid
+
          // set data state
         setData({user: data});
 
-       
+        console.log("User data: ", data);
+ 
         // set internal storage
         await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(data));
       
