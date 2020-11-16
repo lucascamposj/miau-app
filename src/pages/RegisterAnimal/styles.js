@@ -71,7 +71,7 @@ export const CheckBoxContainer = styled.View`
 export const Button = styled(ButtonStyle)`
     text-align: center;
     font-size: 12px;
-    margin: 8px auto;
+    margin: 24px auto;
     width: 232px; 
     height: 40px;
     font-family: 'Roboto-Regular';
