@@ -10,7 +10,6 @@ import {
 } from './styles';
 
 const ListAnimalsItem = ({animal}) => {
-  console.log(animal.photo)
   return (
     <Container>
       <TitleContainer>
