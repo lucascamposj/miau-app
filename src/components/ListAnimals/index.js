@@ -1,15 +1,21 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { ActivityIndicator} from 'react-native';
+import ListAnimalsItem from './ListAnimalsItem';
+import {AnimalsList} from './styles';
 
-const ListAnimals = () => {
+const ListAnimals = ({loading, animals}) => {
 
+  if (loading) {
+    return <ActivityIndicator />;
+  }
   return (
-    <View>
-      <Text>
-        ListAnimals
-      </Text>
-    </View>
-  )
+    <AnimalsList
+      data={animals}
+      renderItem={({ item }) => (
+        <ListAnimalsItem animal={item}/>
+      )}
+    />
+  );
 }
 
 export default ListAnimals;

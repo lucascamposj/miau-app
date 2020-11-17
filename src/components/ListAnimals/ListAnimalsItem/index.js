@@ -1,14 +1,32 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import {
+  AnimalPhoto,
+  Placeholder,
+  Title,
+  Description,
+  DescriptionContainer,
+  Container,
+  TitleContainer
+} from './styles';
 
-const ListAnimalsItem = () => {
-
+const ListAnimalsItem = ({animal}) => {
+  
   return (
-    <View>
-      <Text>
-        ListAnimalsItem
-      </Text>
-    </View>
+    <Container>
+      <TitleContainer>
+        <Title>{animal.name}</Title>
+      </TitleContainer>
+
+      {animal.photo ?
+        <AnimalPhoto source={animal.photo} />
+        : 
+        <Placeholder/>
+      }
+      <DescriptionContainer>
+        <Description>{animal.formType}</Description>
+      </DescriptionContainer>
+    </Container>
   )
 }
 
