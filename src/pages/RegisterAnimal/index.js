@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, Header, HeaderTitle, PictureBox, PictureText, PictureIcon } from "./styles.js";
+import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, PictureBox, PictureText, PictureIcon } from "./styles.js";
 import ToggleButton from './../../components/ToggleButton';
 import Input from './../../components/Input';
 import RadioButton from './../../components/RadioButton';
@@ -7,10 +7,13 @@ import CheckBox from './../../components/CheckBox';
 import firestore from '@react-native-firebase/firestore';
 import {View} from 'react-native';
 import {useAuth} from '../../hooks/auth'
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const RegisterAnimal = () => {
-   // hooks context
-   const {user} = useAuth()
+  const navigation = useNavigation();
+  
+  // hooks context
+  const {user} = useAuth()
 
   // Form type state
   const [formType, setFormType] = useState('adocao')
@@ -113,16 +116,13 @@ const RegisterAnimal = () => {
       .catch((error) => {
         console.log(error);
       })
+
+      navigation.navigate('registersuccess')
     }, [formType, animal]
   )
 
   return (
     <Container>
-      <Header>
-        <HeaderTitle>
-          Cadastro do Animal
-        </HeaderTitle>
-      </Header>
       <ScrollView>
 
         <HeaderTextField>
