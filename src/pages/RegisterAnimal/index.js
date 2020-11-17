@@ -22,7 +22,7 @@ import RadioButton from './../../components/RadioButton';
 import CheckBox from './../../components/CheckBox';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import {View, TouchableOpacity, Alert} from 'react-native';
+import {View, TouchableOpacity, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-picker/lib/commonjs';
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -143,19 +143,14 @@ const RegisterAnimal = () => {
       .putFile(fileUri)
       .then((snapshot) => {
         console.log(`${filename} has been successfully uploaded.`);
+        url = storage().ref(`animals/${filename}`).getDownloadURL();
+        console.log('Image URL: ' + JSON.stringify(url));
+        setAnimal((animal) => ({
+          ...animal,
+          photo: url,
+        }));
       })
       .catch((e) => console.error('Error during upload. ', e));
-
-    setPerson((animal) => ({
-      ...animal,
-      photo: url,
-    }));
-  };
-
-  // Pega o URL da imagem
-  const getUrl = async () => {
-    url = await storage().ref(`users/${filename}`).getDownloadURL();
-    console.log('Image URL: ' + url);
   };
 
   return (
@@ -387,7 +382,10 @@ const RegisterAnimal = () => {
             <Button
               color="#ffd358"
               textColor="#f7f7f7"
-              onPress={() => submit()}>
+              onPress={() => {
+                uploadImage();
+                submit();
+              }}>
               COLOCAR PARA ADOÇÃO
             </Button>
           </View>
@@ -417,7 +415,10 @@ const RegisterAnimal = () => {
             <Button
               color="#ffd358"
               textColor="#f7f7f7"
-              onPress={() => submit()}>
+              onPress={() => {
+                uploadImage();
+                submit();
+              }}>
               PROCURAR PADRINHO
             </Button>
           </View>
@@ -447,9 +448,8 @@ const RegisterAnimal = () => {
               color="#ffd358"
               textColor="#f7f7f7"
               onPress={() => {
-                submit();
                 uploadImage();
-                getUrl();
+                submit();
               }}>
               PROCURAR AJUDA
             </Button>

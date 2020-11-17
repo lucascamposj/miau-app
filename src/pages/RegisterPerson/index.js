@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useCallback} from 'react';
-import {TouchableOpacity, Alert, Platform} from 'react-native';
+import {TouchableOpacity, Platform} from 'react-native';
 import {
   ScrollView,
   Container,
@@ -89,11 +89,14 @@ const RegisterPerson = () => {
       .putFile(fileUri)
       .then((snapshot) => {
         console.log(`${filename} has been successfully uploaded.`);
+        url = storage().ref(`users/${filename}`).getDownloadURL();
+        console.log('Image URL: ' + JSON.stringify(url));
+        setPerson((person) => ({
+          ...person,
+          photo: url,
+        }));
       })
       .catch((e) => console.error('Error during upload. ', e));
-
-    //url = await storage().ref(`users/${filename}`).getDownloadURL();
-    //console.log('Image URL: ' + url);
   };
 
   // Pega o URL da imagem
