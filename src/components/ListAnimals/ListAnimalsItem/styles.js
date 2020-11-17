@@ -25,6 +25,9 @@ export const TitleContainer = styled.View`
 
 export const AnimalPhoto = styled.Image`
   background-color: #CCC;
+  height: 183px;
+  width: 100%;
+  resize-mode: cover;
 `;
 export const Placeholder = styled.View`
   width: 100%;

@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {
   AnimalPhoto,
   Placeholder,
@@ -11,7 +10,7 @@ import {
 } from './styles';
 
 const ListAnimalsItem = ({animal}) => {
-  
+  console.log(animal.photo)
   return (
     <Container>
       <TitleContainer>
@@ -19,7 +18,7 @@ const ListAnimalsItem = ({animal}) => {
       </TitleContainer>
 
       {animal.photo ?
-        <AnimalPhoto source={animal.photo} />
+        <AnimalPhoto source={{uri: animal.photo}} />
         : 
         <Placeholder/>
       }

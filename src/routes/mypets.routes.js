@@ -9,9 +9,19 @@ const Stack = createStackNavigator();
 function MyPets() {
   return (
   <Stack.Navigator
-    screenOptions={{ headerLeft: () =>  <Hamburguer />}}
+    initialRouteName="ListMyPets"
+    screenOptions={{ 
+        headerStyle: { 
+        backgroundColor: '#cfe9e5'
+        },
+        headerTitleStyle: {
+        fontFamily: 'Roboto-Medium',
+        color: '#434343'
+        },
+        headerLeft: () =>  <Hamburguer />
+    }}
   >
-    <Stack.Screen name="ListMyPets" component={ListMyPets} />
+    <Stack.Screen name="ListMyPets" component={ListMyPets} options={{ title: 'Meus Pets' }}  />
     <Stack.Screen name="PetDetails" component={PetDetails} />
   </Stack.Navigator>
   );
