@@ -10,7 +10,6 @@ const ListAdopt = () => {
   useEffect(() => {
     let collection = firestore()
       .collection('animal').where('formType', '==', 'adocao')
-      console.log(collection)
     
     const subscriber = collection
       .onSnapshot(querySnapshot => {

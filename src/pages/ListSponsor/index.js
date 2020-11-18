@@ -10,7 +10,6 @@ const ListSponsor = () => {
   useEffect(() => {
     let collection = firestore()
       .collection('animal').where('formType', '==', 'apadrinhar')
-      console.log(collection)
     
     const subscriber = collection
       .onSnapshot(querySnapshot => {

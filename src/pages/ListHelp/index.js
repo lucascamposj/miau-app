@@ -10,7 +10,6 @@ const ListHelp = () => {
   useEffect(() => {
     let collection = firestore()
       .collection('animal').where('formType', '==', 'ajuda')
-      console.log(collection)
     
     const subscriber = collection
       .onSnapshot(querySnapshot => {
