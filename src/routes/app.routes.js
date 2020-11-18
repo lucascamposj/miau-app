@@ -12,9 +12,9 @@ const Drawer = createDrawerNavigator();
 
 
 export default function Routes() {
-  const { signOut } = useAuth();
+  const { signOut, targetScreen } = useAuth();
   return (
-    <Drawer.Navigator initialRouteName="Meus pets" 
+    <Drawer.Navigator initialRouteName={targetScreen === "" ? "Meus pets" : targetScreen}
       screenOptions={{ headerLeft: () =>  <Hamburguer />}}
       drawerContent={props => {
       return (

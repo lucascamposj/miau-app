@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import { Container, Button, TextField, HeaderField} from "./styles.js"
 import { useRoute, useNavigation } from '@react-navigation/native';
 

@@ -14,6 +14,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [data, setData] = useState({});
+  const [targetScreen, setTargetScreen] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     try{
       await auth().signOut()
       setData({});
+      setTargetScreen("")
       await AsyncStorage.removeItem('@MiauApp:user');
     } catch(e){
       Alert.alert("Erro ao sair!")
@@ -98,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser, loading, signUp }}
+      value={{ user: data.user, signIn, signOut, updateUser, loading, signUp, targetScreen, setTargetScreen }}
     >
       {children}
     </AuthContext.Provider>

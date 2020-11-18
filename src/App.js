@@ -6,14 +6,14 @@ import Routes from './routes';
 
 const App = () => {
   return (
-    <NavigationContainer> 
-      <AppProvider>
+    <AppProvider>
+      <NavigationContainer> 
         <StatusBar barStyle="dark-content" backgroundColor="#88c9bf" />
         <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
           <Routes/>
         </View>
-      </AppProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </AppProvider>
   );
 };
 
