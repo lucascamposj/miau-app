@@ -9,7 +9,10 @@ const Login = () => {
   const {signIn} = useAuth()
 
   // Login data state
-  const [login, setLogin] = useState({})
+  const [login, setLogin] = useState({
+    username: "",
+    password: ""
+  })
 
   // State de Loading
   const [loading, setLoading] = useState(false);
@@ -17,10 +20,15 @@ const Login = () => {
   const submit = useCallback( async () => {
     setLoading(true);
     try {
-      await signIn(login.username, login.password);
+      if (login.username != "" && login.password != ""){
+        await signIn(login.username, login.password);
+      } else{
+        setLoading(false);
+        Alert.alert("Os campos de Usuário e Senha devem ser preenchidos!")
+      }
     } catch(e){
       setLoading(false);
-      Alert.alert("Erro ao logar!\nTente Novamente!")
+      Alert.alert("Erro ao logar! Cheque os campos e tente novamente!")
       console.log(e)
     }
   }, [login, setLoading])
