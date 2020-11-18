@@ -41,6 +41,10 @@
 	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSPhotoLibraryUsageDescription </key>
+	<string>O Miau App precisa acessar a sua galeria.</string>
+	<key>NSCameraUsageDescription </key>
+	<string>O Miau App precisa acessar a sua câmera.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

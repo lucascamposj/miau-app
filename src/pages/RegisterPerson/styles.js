@@ -1,25 +1,25 @@
 import styled from 'styled-components/native';
-import { ScrollView as ScrowViewReact } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import {ScrollView as ScrowViewReact} from 'react-native';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import ButtonStyle from '../../components/Button';
 
 export const ScrollView = styled(ScrowViewReact)`
-    padding: 10px;
+  padding: 10px;
 `;
 
 export const Container = styled.View`
-    flex: 1;
+  flex: 1;
 `;
 
 export const SectionTitle = styled.Text`
-  color: #88C9BF;
+  color: #88c9bf;
   font-size: 14px;
   font-family: 'Roboto-Regular';
 `;
 
 export const InfoSection = styled.View`
-    margin-top: 16px;
+  margin-top: 16px;
 `;
 
 export const InfoBox = styled.View`
@@ -38,33 +38,39 @@ export const InfoContent = styled.Text`
 `;
 
 export const SectionSeparator = styled.View`
-    margin-top: 28px;
+  margin-top: 28px;
 `;
 
 export const Button = styled(ButtonStyle)`
-    text-align: center;
-    font-size: 12px;
-    margin: 24px auto;
-    width: 232px; 
-    height: 40px;
-    font-family: 'Roboto-Regular';
+  text-align: center;
+  font-size: 12px;
+  margin: 24px auto;
+  width: 232px;
+  height: 40px;
+  font-family: 'Roboto-Regular';
 `;
 
 export const PictureBox = styled.View`
   background: #e6e7e7;
   width: 128px;
   height: 128px;
-  display:flex; 
+  display: flex;
   margin: 32px auto 8px auto;
   justify-content: center;
   align-items: center;
+  z-index: -10;
 `;
 
 export const PictureText = styled.Text`
-    color: #757575;
-    font-size: 14px;
-    font-family: 'Roboto-Regular';
+  color: #757575;
+  font-size: 14px;
+  font-family: 'Roboto-Regular';
 `;
 
-export const PictureIcon = styled(FeatherIcon)`
+export const ImageStyled = styled.Image`
+  height: 100%;
+  width: 100%;
+  resize-mode: cover;
 `;
+
+export const PictureIcon = styled(FeatherIcon)``;

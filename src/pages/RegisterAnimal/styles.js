@@ -12,6 +12,12 @@ export const Container = styled.View`
     flex: 1;
 `;
 
+export const ImageStyled = styled.Image`
+  height: 100%;
+  width: 100%;
+  resize-mode: cover;
+`;
+
 export const HeaderTextField = styled.Text`
   color: #757575;
   font-size: 14px;

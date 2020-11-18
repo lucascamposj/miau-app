@@ -1,13 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ScrollView, PageText, Button, ToggleButtonContainer, HeaderTextField, Container, RadioButtonContainer, CheckBoxContainer, SectionTitle, PictureBox, PictureText, PictureIcon } from "./styles.js";
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  ScrollView,
+  PageText,
+  Button,
+  ToggleButtonContainer,
+  HeaderTextField,
+  Container,
+  RadioButtonContainer,
+  CheckBoxContainer,
+  SectionTitle,
+  PictureBox,
+  ImageStyled,
+  PictureText,
+  PictureIcon,
+} from './styles.js';
 import ToggleButton from './../../components/ToggleButton';
 import Input from './../../components/Input';
 import RadioButton from './../../components/RadioButton';
 import CheckBox from './../../components/CheckBox';
 import firestore from '@react-native-firebase/firestore';
-import {View} from 'react-native';
+import storage from '@react-native-firebase/storage';
+import {View, TouchableOpacity, Platform} from 'react-native';
+import ImagePicker from 'react-native-image-picker/lib/commonjs';
+import RNFetchBlob from 'rn-fetch-blob';
 import {useAuth} from '../../hooks/auth'
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, Alert } from '@react-navigation/native';
 
 const RegisterAnimal = () => {
   const navigation = useNavigation();
@@ -17,6 +34,10 @@ const RegisterAnimal = () => {
 
   // Form type state
   const [formType, setFormType] = useState('adocao')
+  const [image, setImage] = useState(null);
+
+  // State de Loading
+  const [loading, setLoading] = useState(false);
 
   // Animal data state
   const [animal, setAnimal] = useState({
@@ -78,8 +99,11 @@ const RegisterAnimal = () => {
   const setAnimalInfo = useCallback(
     (key, value) => {
      setAnimal(animal => {
-       animal[key] = value
-       return {...animal}})
+       let newAnimal = {...animal}
+       newAnimal[key] = value
+       return newAnimal
+      })
+      console.log(animal)
     }, [setAnimal]
   )
 
@@ -111,15 +135,79 @@ const RegisterAnimal = () => {
       .collection('animal')
       .add({formType, ...animal})
       .then(() => {
-        console.log('Animal added!');
+        navigation.navigate('registersuccess')
       })
       .catch((error) => {
+        setLoading(false)
+        Alert.alert("Falha ao Carregar a Imagem!\nTente Novamente.")
         console.log(error);
       })
-
-      navigation.navigate('registersuccess')
-    }, [formType, animal]
+    }, [formType, animal, setLoading]
   )
+
+  // Selecionar a Imagem da galeria
+  const selectImage = useCallback( () => {
+    const options = {
+      maxWidth: 2000,
+      maxHeight: 2000,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+        setImage(source);
+      }
+    });
+  }, [setImage])
+
+  async function getPathForFirebaseStorage(uploadUri) {
+    if (Platform.OS === 'ios') return uploadUri;
+    const stat = await RNFetchBlob.fs.stat(uploadUri);
+    return stat.path;
+  }
+
+  // Upload da imagem para o Firebase
+  const uploadImage = useCallback( async () => {
+    setLoading(true)
+    const {uri} = image;
+    const date = new Date().toString();
+    
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+
+    try {
+      const fileUri = await getPathForFirebaseStorage(uploadUri);
+
+      const snapshot = await storage()
+        .ref(`animals/${filename}-${date}`)
+        .putFile(fileUri)
+
+      
+      const url = await storage().ref(`animals/${filename}-${date}`).getDownloadURL();
+      console.log("image antes", image)
+      console.log("animal antes", animal)
+      setAnimal(oldAnimal => {
+        oldAnimal["photo"] = url
+        return {...oldAnimal}
+      })
+      console.log("animal depois", animal)
+      console.log("image depois", image)
+      submit();
+    } catch(e) {
+      setLoading(false)
+      Alert.alert("Falha ao Carregar a Imagem!\nTente Novamente.")
+      console.log('Error during upload. ', e)
+    }
+  }, [setAnimal, image, setLoading, animal])
 
   return (
     <Container>
@@ -162,12 +250,26 @@ const RegisterAnimal = () => {
           FOTOS DO ANIMAL
         </SectionTitle>
 
-        <PictureBox>
-          <PictureIcon name={'plus-circle'} color={'#757575'} size={24} />
-          <PictureText>
-            adicionar fotos
-            </PictureText>
-        </PictureBox>
+        <TouchableOpacity onPress={selectImage}>
+          <PictureBox>
+            {
+              image ? 
+              <ImageStyled source={{uri:image.uri}} />
+              :
+              <>
+                <PictureIcon
+                  name="plus-circle"
+                  color={'#757575'}
+                  size={24}
+                />
+                <PictureText>
+                  adicionar foto
+                </PictureText>
+              </>
+            }
+            
+          </PictureBox>
+        </TouchableOpacity>
 
         <SectionTitle>
           ESPÉCIE
@@ -271,7 +373,14 @@ const RegisterAnimal = () => {
             history: value}))}
         />
 
-        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
+        <Button 
+          color="#ffd358" 
+          textColor="#434343" 
+          loading={loading}
+          onPress={() => 
+            uploadImage()
+            }
+        >
           COLOCAR PARA ADOÇÃO
         </Button>
        
@@ -307,7 +416,14 @@ const RegisterAnimal = () => {
             history: value}))}
         />
 
-        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
+        <Button 
+          color="#ffd358" 
+          textColor="#434343" 
+          loading={loading}
+          onPress={() => 
+            uploadImage()
+          }
+        >
           PROCURAR PADRINHO
         </Button>
        
@@ -353,7 +469,14 @@ const RegisterAnimal = () => {
             history: value}))}
         />
 
-        <Button color="#ffd358" textColor="#f7f7f7" onPress={() => submit()}>
+        <Button 
+          color="#ffd358" 
+          textColor="#434343" 
+          loading={loading}
+          onPress={() => 
+              uploadImage()
+            }
+        >
           PROCURAR AJUDA
         </Button>
        

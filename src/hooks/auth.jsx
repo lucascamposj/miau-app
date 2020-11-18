@@ -8,6 +8,7 @@ import React, {
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { Alert } from 'react-native';
 
 const AuthContext = createContext();
 
@@ -28,43 +29,31 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signIn  = useCallback(async (email, password) => {
-    auth().signInWithEmailAndPassword(email, password)
-    .then(async (doc) => {  
-        
-      try {
-        const user = await firestore()
-        .collection('usuario')
-        .doc(doc.user.uid)
-        .get();
+    const doc = await auth().signInWithEmailAndPassword(email, password)
+    
+    const user = await firestore()
+    .collection('usuario')
+    .doc(doc.user.uid)
+    .get();
 
-        // set UID
-        user._data.data.uid = doc.user.uid
+    // set UID
+    user._data.data.uid = doc.user.uid
 
-        // set state
-        setData({user: user._data.data});
-
-        console.log("User data: ", user._data.data);
-        
-        await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(user._data.data));
-      } catch (e) {
-        //Handle error
-        console.error(e.message)
-      }
-
-      console.log("Logged in!");
-
-    }).catch((error) => {
-      //Handle error
-      console.log(error.message)
-    }); 
+    // set state
+    setData({user: user._data.data});
+    
+    await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(user._data.data));
   }, [setData]);
 
-  const signOut = useCallback(() => {
-    auth().signOut().then(async () => {
+  const signOut = useCallback(async () => {
+    try{
+      await auth().signOut()
       setData({});
       await AsyncStorage.removeItem('@MiauApp:user');
-      console.log('User signed out!');
-    });
+    } catch(e){
+      Alert.alert("Erro ao sair!")
+      console.error(e)
+    }
   },[setData])
 
   const updateUser = useCallback(
@@ -79,43 +68,32 @@ export const AuthProvider = ({ children }) => {
   );
 
   const signUp = useCallback(async (data) => {
-    auth().createUserWithEmailAndPassword(data.email, data.password)
-    .then(async (login) => {   
+    try {
+      const login = await auth().createUserWithEmailAndPassword(data.email, data.password)
+      
       // remove user password information
       delete data.password;
       
       // Add user to database
-      try {
-        await firestore()
-        .collection('usuario')
-        .doc(login.user.uid)
-        .set({data})
-        .then(() => {
-          console.log('Person added!');
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-
-        // set UID to data
-        data.uid = login.user.uid
-
-         // set data state
-        setData({user: data});
-
-        console.log("User data: ", data);
  
-        // set internal storage
-        await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(data));
+      await firestore()
+      .collection('usuario')
+      .doc(login.user.uid)
+      .set({data})
+  
+      // set UID to data
+      data.uid = login.user.uid
+
+        // set data state
+      setData({user: data});
+
+      // set internal storage
+      await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(data));
       
-      } catch (e) {
-        //Handle error
-        console.error(e.message)
-      }
-    }).catch((error) => {
+    } catch(error) {
         //Handle error
         console.error(error.message)
-    }); 
+    }; 
   },[setData]);
 
   return (
