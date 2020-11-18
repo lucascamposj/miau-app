@@ -19,7 +19,7 @@ export const TitleContainer = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #cfe9e5;
+  background-color: ${props => props.color ? props.color : '#cfe9e5'};
   padding: 0 16px;
 `;
 

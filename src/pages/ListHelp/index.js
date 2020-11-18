@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import ListAnimals from '../../components/ListAnimals';
 import {useAuth} from '../../hooks/auth';
-const ListAdopt = () => {
+const ListHelp = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const {user} = useAuth();
 
   useEffect(() => {
     let collection = firestore()
-      .collection('animal').where('formType', '==', 'adocao')
+      .collection('animal').where('formType', '==', 'ajuda')
       console.log(collection)
     
     const subscriber = collection
@@ -41,4 +41,4 @@ const ListAdopt = () => {
   )
 }
 
-export default ListAdopt;
+export default ListHelp;

@@ -1,16 +1,16 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Filters from '../pages/Filters';
-import ListAdopt from '../pages/ListAdopt';
-import AdoptDetails from '../pages/AdoptDetails';
+import ListHelp from '../pages/ListHelp';
+import HelpDetails from '../pages/HelpDetails';
 import Hamburguer from '../components/Button/Hamburguer/index.js'
 
 const Stack = createStackNavigator();
 
-function Adopt() {
+function Help() {
   return (
     <Stack.Navigator
-      initialRouteName="Adotar"
+      initialRouteName="Ajudar"
       screenOptions={{ 
           headerStyle: { 
           backgroundColor: '#ffd358'
@@ -22,11 +22,11 @@ function Adopt() {
           headerLeft: () =>  <Hamburguer />
       }}
     >
-      <Stack.Screen name="Adotar" component={ListAdopt} />
-      <Stack.Screen name="Adopt Details" component={AdoptDetails} />
+      <Stack.Screen name="Ajudar" component={ListHelp} />
+      <Stack.Screen name="Adopt Details" component={HelpDetails} />
       <Stack.Screen name="Filtrar pesquisa" component={Filters} />
     </Stack.Navigator>
   );
 }
 
-export default Adopt;
+export default Help;

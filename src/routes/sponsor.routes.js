@@ -1,16 +1,16 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Filters from '../pages/Filters';
-import ListAdopt from '../pages/ListAdopt';
-import AdoptDetails from '../pages/AdoptDetails';
+import ListSponsor from '../pages/ListSponsor';
+import SponsorDetails from '../pages/SponsorDetails';
 import Hamburguer from '../components/Button/Hamburguer/index.js'
 
 const Stack = createStackNavigator();
 
-function Adopt() {
+function Sponsor() {
   return (
     <Stack.Navigator
-      initialRouteName="Adotar"
+      initialRouteName="Apadrinhar"
       screenOptions={{ 
           headerStyle: { 
           backgroundColor: '#ffd358'
@@ -22,11 +22,11 @@ function Adopt() {
           headerLeft: () =>  <Hamburguer />
       }}
     >
-      <Stack.Screen name="Adotar" component={ListAdopt} />
-      <Stack.Screen name="Adopt Details" component={AdoptDetails} />
+      <Stack.Screen name="Apadrinhar" component={ListSponsor} />
+      <Stack.Screen name="Adopt Details" component={SponsorDetails} />
       <Stack.Screen name="Filtrar pesquisa" component={Filters} />
     </Stack.Navigator>
   );
 }
 
-export default Adopt;
+export default Sponsor;

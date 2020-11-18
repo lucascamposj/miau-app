@@ -9,10 +9,10 @@ import {
   TitleContainer
 } from './styles';
 
-const ListAnimalsItem = ({animal}) => {
+const ListAnimalsItem = ({animal, color}) => {
   return (
     <Container>
-      <TitleContainer>
+      <TitleContainer color={color}>
         <Title>{animal.name}</Title>
       </TitleContainer>
 
