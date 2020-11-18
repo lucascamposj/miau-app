@@ -1,34 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import { Container, LoginSection, SocialSection, Button, SingInButton, Header, HeaderTitle} from "./styles.js"
+import React, {useState, useCallback} from 'react';
+import { Container, LoginSection, SocialSection, Button, SingInButton} from "./styles.js"
 import Input from '../../components/Input'
-import auth from '@react-native-firebase/auth';
+import {useAuth} from '../../hooks/auth'
+import {Alert} from 'react-native';
 
 const Login = () => {
+  // hooks context
+  const {signIn} = useAuth()
 
   // Login data state
   const [login, setLogin] = useState({})
 
-  const SignIn  = async (email, password) => {
-    try {
-      await auth().signInWithEmailAndPassword(email, password);
-      setLogin(prev => ({...prev, authenticated: true}))
-      console.log("Logged in!")
-    } catch (e) {
-      console.error(e.message)
-    }
-  }
+  // State de Loading
+  const [loading, setLoading] = useState(false);
 
-  const SignOut = () => {
-    auth().signOut().then(() => console.log('User signed out!'));
-  }
+  const submit = useCallback( async () => {
+    setLoading(true);
+    try {
+      await signIn(login.username, login.password);
+    } catch(e){
+      setLoading(false);
+      Alert.alert("Erro ao logar!\nTente Novamente!")
+      console.log(e)
+    }
+  }, [login, setLoading])
 
   return (
     <Container>
-      <Header>
-        <HeaderTitle>
-          Login
-        </HeaderTitle>
-      </Header>
       <LoginSection>
         
         <Input
@@ -42,7 +40,7 @@ const Login = () => {
           onChangeText={(text) => setLogin(prev => ({...prev,password: text}))}
         />
 
-        <SingInButton color="#88c9bf" textColor="#434343" onPress={() => SignIn(login.username, login.password)} >
+        <SingInButton color="#88c9bf" textColor="#434343" loading={loading} onPress={() => submit()} >
           ENTRAR
         </SingInButton>
       </LoginSection>

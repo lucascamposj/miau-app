@@ -12,22 +12,10 @@ export const Container = styled.View`
     flex: 1;
 `;
 
-export const Header = styled.View`
-  padding: 24px;
-  padding-top: ${getStatusBarHeight() + 24}px;
-  background: #ffd358;
-  height:  ${getStatusBarHeight() + 24 + 56}px;
-
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const HeaderTitle = styled.Text`
-  color: #434343;
-  font-size: 20px;
-  font-family: 'Roboto-Medium';
-  line-height: 28px;
+export const ImageStyled = styled.Image`
+  height: 100%;
+  width: 100%;
+  resize-mode: cover;
 `;
 
 export const HeaderTextField = styled.Text`
@@ -71,7 +59,7 @@ export const CheckBoxContainer = styled.View`
 export const Button = styled(ButtonStyle)`
     text-align: center;
     font-size: 12px;
-    margin: 8px auto;
+    margin: 24px auto;
     width: 232px; 
     height: 40px;
     font-family: 'Roboto-Regular';

@@ -6,7 +6,7 @@ export const Container = styled.TouchableOpacity`
     align-items: center;
     justify-content: flex-start;
     border: 0;
-    margin: 0;
+    margin-right: 8px;
 `;
 
 export const RadioButtonContainer = styled.View`

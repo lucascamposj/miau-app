@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import { ScrollView, Container, SectionTitle, Header, HeaderTitle} from "./styles.js";
 import firestore from '@react-native-firebase/firestore';
 
-const FilterResults = () => {
+const Filters = () => {
 
   // Animal data state
   const [animal, setAnimal] = useState({})
@@ -63,4 +63,4 @@ const FilterResults = () => {
   );
 };
 
-export default FilterResults;
+export default Filters;

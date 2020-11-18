@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useCallback} from 'react';
-import {TouchableOpacity, Platform} from 'react-native';
+import {TouchableOpacity, Platform, Alert} from 'react-native';
 import {
   ScrollView,
   Container,
@@ -10,44 +9,32 @@ import {
   SectionTitle,
   SectionSeparator,
   Button,
-  Header,
-  HeaderTitle,
   PictureBox,
   PictureText,
   PictureIcon,
+  ImageStyled,
 } from './styles.js';
 import Input from './../../components/Input';
-import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker/lib/commonjs';
 import RNFetchBlob from 'rn-fetch-blob';
+import {useAuth} from '../../hooks/auth'
 
 const RegisterPerson = () => {
   // State de Person
   const [person, setPerson] = useState();
 
+  // State de Loading
+  const [loading, setLoading] = useState(false);
+
+  // hooks context
+  const {signUp} = useAuth()
+
   // State de Image
   const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
-  var url;
-
-  // Callback do envio do objeto
-  const submit = useCallback(() => {
-    firestore()
-      .collection('usuario')
-      .add({person})
-      .then((doc) => {
-        console.log('Person added! ID: ' + doc.id);
-        console.log(JSON.stringify(person));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [person]);
 
   // Selecionar a Imagem da galeria
-  const selectImage = () => {
+  const selectImage = useCallback( () => {
     const options = {
       maxWidth: 2000,
       maxHeight: 2000,
@@ -68,7 +55,7 @@ const RegisterPerson = () => {
         setImage(source);
       }
     });
-  };
+  }, [setImage])
 
   async function getPathForFirebaseStorage(uploadUri) {
     if (Platform.OS === 'ios') return uploadUri;
@@ -77,39 +64,39 @@ const RegisterPerson = () => {
   }
 
   // Upload da imagem para o Firebase
-  const uploadImage = async () => {
+  const uploadImage = useCallback( async () => {
+    setLoading(true)
+
     const {uri} = image;
-    console.log('Image URI: ' + uri);
+    const date = new Date().toString();
+    
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    const fileUri = await getPathForFirebaseStorage(uploadUri);
 
-    const task = storage()
-      .ref(`users/${filename}`)
-      .putFile(fileUri)
-      .then((snapshot) => {
-        console.log(`${filename} has been successfully uploaded.`);
-        url = storage().ref(`users/${filename}`).getDownloadURL();
-        console.log('Image URL: ' + JSON.stringify(url));
-        setPerson((person) => ({
-          ...person,
-          photo: url,
-        }));
+    try {
+      const fileUri = await getPathForFirebaseStorage(uploadUri);
+
+      const snapshot = await storage()
+        .ref(`users/${filename}-${date}`)
+        .putFile(fileUri)
+
+      
+      const url = await storage().ref(`users/${filename}-${date}`).getDownloadURL();
+      setPerson(oldPerson => {
+        oldPerson["photo"] = url
+        return {...oldPerson}
       })
-      .catch((e) => console.error('Error during upload. ', e));
-  };
 
-  // Pega o URL da imagem
-  // const getUrl = async () => {
-  //   url = await storage().ref(`users/${filename}`).getDownloadURL();
-  //   console.log('Image URL: ' + url);
-  // };
+      signUp(person);
+    } catch(e) {
+      setLoading(false)
+      Alert.alert("Falha ao Cadastrar o Usuário!\nTente Novamente")
+      console.log('Error during upload. ', e)
+    }
+  }, [setPerson, image, person, setLoading])
 
   return (
     <Container>
-      <Header>
-        <HeaderTitle>Cadastro Pessoal</HeaderTitle>
-      </Header>
       <ScrollView>
         <InfoSection>
           <InfoBox>
@@ -224,17 +211,25 @@ const RegisterPerson = () => {
 
         <SectionSeparator>
           <SectionTitle>FOTO DE PERFIL</SectionTitle>
-          <TouchableOpacity onPress={selectImage}>
-            <PictureBox>
-              <PictureIcon
-                name={image ? 'check' : 'plus-circle'}
-                color={'#757575'}
-                size={24}
-              />
-              <PictureText>
-                {image ? 'foto selecionada' : 'adicionar foto'}
-              </PictureText>
-            </PictureBox>
+            <TouchableOpacity onPress={selectImage}>
+              <PictureBox>
+                {
+                  image ? 
+                  <ImageStyled source={{uri:image.uri}} />
+                  :
+                  <>
+                    <PictureIcon
+                      name="plus-circle"
+                      color={'#757575'}
+                      size={24}
+                    />
+                    <PictureText>
+                      adicionar foto
+                    </PictureText>
+                  </>
+                }
+                
+              </PictureBox>
           </TouchableOpacity>
         </SectionSeparator>
 
@@ -242,10 +237,9 @@ const RegisterPerson = () => {
           <Button
             color="#88c9bf"
             textColor="#434343"
-            onPress={() => {
-              uploadImage();
-              submit();
-            }}>
+            loading={loading}
+            onPress={() => uploadImage()}
+          >
             FAZER CADASTRO
           </Button>
         </SectionSeparator>
