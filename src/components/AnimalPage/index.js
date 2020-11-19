@@ -8,9 +8,10 @@ import {
   TextContainer,
   Container,
   Section,
-  TextRowContainer
+  ClearSection,
+  TextRowContainer,
+  ScrollView
 } from './styles';
-import {ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
 const AnimalPage = ({animal, buttons, ...rest}) => {
@@ -80,6 +81,120 @@ const AnimalPage = ({animal, buttons, ...rest}) => {
     }, "")
 
     return finalString
+  }
+
+  const parseSponsorDemands = (animal) => {
+    let results = []
+    const finalNames = ["Termo de apadrinhamento", "Auxílio financeiro", "Alimentação", "Saúde", "Objetos", "Visitas ao animal"]
+    const itemList = [
+      animal.sponsorship.terms,
+      animal.sponsorship.financialSupport,
+      animal.sponsorship.food,
+      animal.sponsorship.health,
+      animal.sponsorship.objects,
+      animal.sponsorship.visits
+    ]
+
+    for (let i=0; i < 6; i++) {
+      if (itemList[i]){
+        results.push(finalNames[i])
+      }
+    } 
+
+    const finalString = results.reduce((acc, curr, i, arr) => {
+      if (i == 0) {
+        return curr
+      } else if ((arr.length -1) == i) {
+        return acc + " e " + curr
+      } else {
+        return acc + ", " + curr
+      }
+    }, "")
+
+    return finalString
+  }
+
+  const parseDemands = (animal) => {
+    let results = []
+    const finalNames = ["Termo de adoção", "Fotos da casa", "Visita prévia ao animal", "acompanhamento durante um mês", "acompanhamento durante três meses", "acompanhamento durante seis meses"]
+    const itemList = [
+      animal.adoption.terms,
+      animal.adoption.housePhotos,
+      animal.adoption.previousVisit,
+      animal.adoption.postAdoptionFollowup,
+      animal.adoption.followupMonths
+    ]
+
+    for (let i=0; i < 3; i++) {
+      if (itemList[i]){
+        results.push(finalNames[i])
+      }
+    }
+
+    if (itemList[3]){
+      switch (itemList[4]) {
+        case 1:
+          results.push(finalNames[3])
+          break;
+        
+        case 3:
+          results.push(finalNames[4])
+          break;
+
+        case 6:
+          results.push(finalNames[5])
+          break;
+  
+      }
+    }    
+
+    const finalString = results.reduce((acc, curr, i, arr) => {
+      if (i == 0) {
+        return curr
+      } else if ((arr.length -1) == i) {
+        return acc + " e " + curr
+      } else {
+        return acc + ", " + curr
+      }
+    }, "")
+
+    return finalString
+  }
+
+  const parseHelp = (animal) => {
+    let results = []
+    const finalNames = ["Alimento", "Auxílio financeiro", "Medicamento", "Objetos"]
+    const itemList = [
+      animal.help.food,
+      animal.help.financialSupport,
+      animal.help.medication,
+      animal.help.objects
+    ]
+
+    for (let i=0; i < 4; i++) {
+      if (itemList[i]){
+        results.push(finalNames[i])
+      }
+    }
+
+    const finalString = results.reduce((acc, curr, i, arr) => {
+      if (i == 0) {
+        return curr
+      } else if ((arr.length -1) == i) {
+        return acc + " e " + curr
+      } else {
+        return acc + ", " + curr
+      }
+    }, "")
+
+    return finalString
+  }
+
+  const parseHelpLabel = (animal) => {
+    if (animal.sex === "macho"){
+      return "O " + animal.name + " PRESISA DE"
+    }  
+    return "A " + animal.name + " PRESISA DE"
   }
 
   useEffect(() => {
@@ -208,6 +323,65 @@ const AnimalPage = ({animal, buttons, ...rest}) => {
           </ContentText>
         </TextContainer>
       </Section>
+
+  { animal.formType === "adocao" ?
+      <Section>
+        <TextContainer>
+          <LabelText>
+            EXIGÊNCIAS DO DOADOR
+          </LabelText>
+
+          <ContentText>
+            {parseDemands(animal)}
+          </ContentText>
+        </TextContainer>
+      </Section>  
+    :
+      <></>
+  }
+
+  { animal.formType === "ajuda" ?
+      <Section>
+        <TextContainer>
+          <LabelText>
+            {parseHelpLabel(animal)}
+          </LabelText>
+
+          <ContentText>
+            {parseHelp(animal)}
+          </ContentText>
+        </TextContainer>
+      </Section>  
+    :
+      <></>
+  }
+
+  { animal.formType === "apadrinhar" ?
+      <Section>
+        <TextContainer>
+          <LabelText>
+            EXIGÊNCIAS DO DONO
+          </LabelText>
+
+          <ContentText>
+            {parseSponsorDemands(animal)}
+          </ContentText>
+        </TextContainer>
+      </Section>  
+    :
+      <></>
+  }
+        <ClearSection>
+          <TextContainer>
+            <LabelText>
+              {"MAIS SOBRE " + animal.name}
+            </LabelText>
+
+            <ContentText>
+              {animal.history}
+            </ContentText>
+          </TextContainer>
+        </ClearSection>
 
       </Container>
     </ScrollView>    

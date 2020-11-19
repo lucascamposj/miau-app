@@ -1,4 +1,8 @@
 import styled from 'styled-components/native';
+import { ScrollView as ScrowViewReact } from 'react-native';
+
+export const ScrollView = styled(ScrowViewReact)`
+`;
 
 export const AnimalPhoto = styled.Image`
   background-color: #CCC;
@@ -51,6 +55,10 @@ export const Section = styled.View`
   border-style: solid; 
   border-bottom-color: #e0e0e0; 
   border-bottom-width: 1px;
+`;
+
+export const ClearSection = styled.View`
+  padding: 10px 0px;
 `;
 
 export const Container = styled.View`
