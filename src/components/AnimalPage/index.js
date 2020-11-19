@@ -14,7 +14,7 @@ import {
 } from './styles';
 import firestore from '@react-native-firebase/firestore';
 
-const AnimalPage = ({animal, buttons, ...rest}) => {
+const AnimalPage = ({animal, button, ...rest}) => {
   const [userData, setUserData] = useState([]);
 
   const getSex = (sex) => {
@@ -382,6 +382,8 @@ const AnimalPage = ({animal, buttons, ...rest}) => {
             </ContentText>
           </TextContainer>
         </ClearSection>
+
+        {button()}
 
       </Container>
     </ScrollView>    
