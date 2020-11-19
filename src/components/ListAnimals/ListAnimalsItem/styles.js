@@ -57,3 +57,6 @@ export const Description = styled.Text`
   color: #434343;
   font-family: 'Roboto-Regular';
 `;
+
+export const SelectAnimal = styled.TouchableOpacity`
+`;

@@ -15,6 +15,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [data, setData] = useState({});
   const [targetScreen, setTargetScreen] = useState("");
+  const [selectedAnimal, setSelectedAnimal] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser, loading, signUp, targetScreen, setTargetScreen }}
+      value={{ user: data.user, signIn, signOut, updateUser, loading, signUp, targetScreen, setTargetScreen, selectedAnimal, setSelectedAnimal }}
     >
       {children}
     </AuthContext.Provider>

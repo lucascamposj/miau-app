@@ -16,7 +16,7 @@ const AuthRoutes = () => (
       headerTitleStyle: {
         fontFamily: 'Roboto-Medium',
         color: '#434343'
-      },
+      }
     }}
   >
     <Auth.Screen name="InitialScreen" options={{ title: '', headerShown: false }} component={InitialScreen} />

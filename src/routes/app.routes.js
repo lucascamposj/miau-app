@@ -15,7 +15,10 @@ export default function Routes() {
   const { signOut, targetScreen } = useAuth();
   return (
     <Drawer.Navigator initialRouteName={targetScreen === "" ? "Meus pets" : targetScreen}
-      screenOptions={{ headerLeft: () =>  <Hamburguer />}}
+      screenOptions={{ 
+        headerLeft: () =>  <Hamburguer />,
+        gestureEnabled: false
+      }}
       drawerContent={props => {
       return (
         <DrawerContentScrollView {...props}>

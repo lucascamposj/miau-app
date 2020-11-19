@@ -1,13 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import {useAuth} from '../../hooks/auth'
+import AnimalPage from '../../components/AnimalPage'
 
 const HelpDetails = () => {
+  // hooks context
+  const {selectedAnimal} = useAuth()
 
   return (
     <View>
-      <Text>
-        HelpDetails
-      </Text>
+      <AnimalPage animal={selectedAnimal} />
     </View>
   )
 }

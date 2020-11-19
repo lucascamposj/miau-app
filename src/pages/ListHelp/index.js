@@ -36,7 +36,7 @@ const ListHelp = () => {
   }, [user]);
 
   return (
-    <ListAnimals loading={loading} animals={pets} color="#fee29b" />
+    <ListAnimals loading={loading} animals={pets} color="#fee29b" animalScreen="Help Details" />
   )
 }
 

@@ -6,25 +6,28 @@ import {
   Description,
   DescriptionContainer,
   Container,
-  TitleContainer
+  TitleContainer,
+  SelectAnimal
 } from './styles';
 
-const ListAnimalsItem = ({animal, color}) => {
+const ListAnimalsItem = ({animal, color, ...rest}) => {
   return (
-    <Container>
-      <TitleContainer color={color}>
-        <Title>{animal.name}</Title>
-      </TitleContainer>
+    <SelectAnimal {...rest}>
+      <Container>
+        <TitleContainer color={color}>
+          <Title>{animal.name}</Title>
+        </TitleContainer>
 
-      {animal.photo ?
-        <AnimalPhoto source={{uri: animal.photo}} />
-        : 
-        <Placeholder/>
-      }
-      <DescriptionContainer>
-        <Description>{animal.formType}</Description>
-      </DescriptionContainer>
-    </Container>
+        {animal.photo ?
+          <AnimalPhoto source={{uri: animal.photo}} />
+          : 
+          <Placeholder/>
+        }
+        <DescriptionContainer>
+          <Description>{animal.formType}</Description>
+        </DescriptionContainer>
+      </Container>
+    </SelectAnimal>
   )
 }
 
