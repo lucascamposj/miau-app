@@ -25,9 +25,24 @@ function Help() {
           }
       }}
     >
-      <Stack.Screen name="Ajudar" component={ListHelp} options={ {headerLeft: () =>  <Hamburguer />}} />
-      <Stack.Screen name="Help Details" component={HelpDetails} options={{ title: selectedAnimal.name ? capitalizeFirstLetter(selectedAnimal.name) : ""}} />
-      <Stack.Screen name="Filtrar pesquisa" component={Filters} />
+      <Stack.Screen 
+        name="Ajudar" 
+        component={ListHelp} 
+        options={ {
+          headerLeft: () =>  <Hamburguer />
+        }} 
+      />
+      <Stack.Screen 
+        name="Help Details" 
+        component={HelpDetails} 
+        options={{ 
+          title: selectedAnimal.name ? capitalizeFirstLetter(selectedAnimal.name) : ""
+        }} 
+      />
+      <Stack.Screen 
+        name="Filtrar pesquisa" 
+        component={Filters} 
+      />
     </Stack.Navigator>
   );
 }
