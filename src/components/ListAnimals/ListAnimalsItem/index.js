@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   AnimalPhoto,
   Placeholder,
@@ -11,6 +11,27 @@ import {
 } from './styles';
 
 const ListAnimalsItem = ({animal, color, ...rest}) => {
+  
+  const interestedUsersParsed = useMemo(() => {
+    let quantity = 0;
+    if(animal.interestedUsers){
+      quantity = animal.interestedUsers.length;
+    }
+
+    if(quantity === 1){
+      return `${quantity} interessado`;
+    }
+    return `${quantity} interessados`;
+  }, [animal.interestedUsers]) 
+
+  const formTypeParsed = useMemo(() => {
+    if(animal.formType === 'adocao'){
+      return "Adoção"
+    }
+    return formType;
+  }, [animal]) 
+
+
   return (
     <SelectAnimal {...rest}>
       <Container>
@@ -24,7 +45,8 @@ const ListAnimalsItem = ({animal, color, ...rest}) => {
           <Placeholder/>
         }
         <DescriptionContainer>
-          <Description>{animal.formType}</Description>
+          <Description>{interestedUsersParsed}</Description>
+          <Description>{formTypeParsed}</Description>
         </DescriptionContainer>
       </Container>
     </SelectAnimal>
