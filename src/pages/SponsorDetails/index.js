@@ -1,5 +1,3 @@
-export default SponsorDetails;
-
 import React,{useState, useCallback, useEffect} from 'react';
 import {Alert, View} from 'react-native';
 import {useAuth} from '../../hooks/auth';
