@@ -103,7 +103,6 @@ const RegisterAnimal = () => {
        newAnimal[key] = value
        return newAnimal
       })
-      console.log(animal)
     }, [setAnimal]
   )
 
@@ -193,14 +192,10 @@ const RegisterAnimal = () => {
 
       
       const url = await storage().ref(`animals/${filename}-${date}`).getDownloadURL();
-      console.log("image antes", image)
-      console.log("animal antes", animal)
       setAnimal(oldAnimal => {
         oldAnimal["photo"] = url
         return {...oldAnimal}
       })
-      console.log("animal depois", animal)
-      console.log("image depois", image)
       submit();
     } catch(e) {
       setLoading(false)

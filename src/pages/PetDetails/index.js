@@ -4,13 +4,26 @@ import {useAuth} from '../../hooks/auth'
 import AnimalPage from '../../components/AnimalPage'
 import { Button, ButtonContainer } from "./styles.js"
 import { useRoute, useNavigation } from '@react-navigation/native';
-
+import firestore from '@react-native-firebase/firestore';
 
 const PetDetails = () => {
   // hooks context
   const {selectedAnimal} = useAuth()
 
   const navigation = useNavigation();
+
+  const RemovePet = () => {
+    firestore()
+    .collection('animal')
+    .doc(selectedAnimal.key)
+    .delete()
+    .then(() => {
+      navigation.navigate('RemovePet', {
+        animalName: selectedAnimal.name,
+        animalSex: selectedAnimal.sex,
+      })
+    });
+  }
 
   const MyPetsButton = () => {
     return (
@@ -28,12 +41,7 @@ const PetDetails = () => {
         <Button
           color="#88c9bf"
           textColor="#757575"
-          onPress={() => {
-            navigation.navigate('RemovePet', {
-              animalName: selectedAnimal.name,
-              animalSex: selectedAnimal.sex,
-            })
-          }}
+          onPress={() => RemovePet()}
         >
           REMOVER PET
         </Button>
