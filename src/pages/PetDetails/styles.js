@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import ButtonStyle from '../../components/Button';
 
 export const ButtonContainer = styled.View`
-    display: flex; 
     flex-direction: row;
     justify-content: space-between;
     margin: 5px 0;

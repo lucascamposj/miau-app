@@ -82,7 +82,9 @@ export const AuthProvider = ({ children }) => {
       await firestore()
       .collection('usuario')
       .doc(login.user.uid)
-      .set({data})
+      .set({...data,
+        uid: login.user.uid
+      })
   
       // set UID to data
       data.uid = login.user.uid

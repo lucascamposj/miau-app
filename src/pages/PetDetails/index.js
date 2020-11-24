@@ -18,6 +18,9 @@ const PetDetails = () => {
         <Button
           color="#88c9bf"
           textColor="#757575"
+          onPress={() => {
+            navigation.navigate('Interests')
+          }}
         >
           VER INTERESSADOS
         </Button>
