@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import { ScrollView as ScrowViewReact } from 'react-native';
 
 export const ScrollView = styled(ScrowViewReact)`
+  /* flex: 1; */
 `;
 
 export const AnimalPhoto = styled.Image`
@@ -20,6 +21,7 @@ export const AnimalName = styled.Text`
   color: #434343;
   font-size: 16px;
   font-family: 'Roboto-Medium';
+  margin-top: 10px;
 `;
 
 export const LabelText = styled.Text`
@@ -44,6 +46,7 @@ export const TextContainer = styled.View`
 
 export const TextRowContainer = styled.View`
   display: flex; 
+  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   margin: 5px 0;
@@ -51,6 +54,8 @@ export const TextRowContainer = styled.View`
 `;
 
 export const Section = styled.View`
+  flex: 1;
+
   padding: 10px 0px;
   border-style: solid; 
   border-bottom-color: #e0e0e0; 
@@ -62,6 +67,6 @@ export const ClearSection = styled.View`
 `;
 
 export const Container = styled.View`
-  flex: 1;
-  padding: 10px;
+
+  padding: 0 10px;
 `;

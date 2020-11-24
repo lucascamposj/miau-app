@@ -255,15 +255,17 @@ const AnimalPage = ({animal, button, ...rest}) => {
           </TextContainer>
         </TextRowContainer>
 
-        <TextContainer>
-          <LabelText>
-            Localização
-          </LabelText>
+        {(userData.data) && 
+          <TextContainer>
+            <LabelText>
+              Localização
+            </LabelText>
 
-          <ContentText>
-            {userData.city} - {userData.state}
-          </ContentText>
-        </TextContainer>
+            <ContentText>
+              {userData.data.city} - {userData.data.state}
+            </ContentText>
+          </TextContainer>
+        }
       </Section>
 
       <Section>
