@@ -20,7 +20,10 @@ export const getRequestAnimalState = async (animalID, userID) => {
     let animal = await animalRef.get();
     animal = animal.data();
 
-    return !!animal.interestedUsers.find((item) => (item === userID));
+    if(animal.interestedUsers){
+      return !!animal.interestedUsers.find((item) => (item === userID));
+    }
+    return false;
 
   } catch(err) {
     console.log('Erro catching animal request state: ', err);
@@ -34,7 +37,12 @@ export const toogleRequestAnimalState = async (animalID, userID) => {
     let animal = await animalRef.get();
     animal = animal.data();
 
-    const requestState = !!animal.interestedUsers.find((item) => (item === userID));
+    let requestState;
+    if(animal.interestedUsers){
+      requestState = !!animal.interestedUsers.find((item) => (item === userID));
+    }else{
+      requestState = false;
+    }
 
     if(requestState){
       await cancelRequestAnimal(animalID, userID);
