@@ -6,7 +6,8 @@ import Help from './help.routes';
 import Sponsor from './sponsor.routes';
 import MyPets from './mypets.routes';
 import { useAuth } from '../hooks/auth';
-import Hamburguer from '../components/Button/Hamburguer/index.js'
+import Hamburguer from '../components/Button/Hamburguer/index.js';
+import DrawerHeader from '../components/DrawerHeader';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,11 +22,33 @@ export default function Routes() {
         gestureEnabled: false //!(navigation.state.index > 0),
         //drawerLockMode: navigation.state.index > 0 ? 'locked-closed' : 'unlocked'
       })}
+      drawerStyle={{
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomWidth: 0,
+      }}
       drawerContent={props => {
       return (
         <DrawerContentScrollView {...props}>
-          <DrawerItemList {...props} />
-          <DrawerItem label="Sair" onPress={() => signOut()} />
+          <DrawerHeader/>
+          <DrawerItemList 
+            {...props} 
+            labelStyle={{
+              color: '#757575',
+            }}
+            activeBackgroundColor='#cfe9e5'
+          />
+          <DrawerItem 
+            label="Sair" 
+            style={{
+              backgroundColor: '#88c9bf',
+            }} 
+            labelStyle={{
+              color: "#757575",
+              alignSelf: "center",
+            }}
+            onPress={() => signOut()} 
+          />
         </DrawerContentScrollView>
       )
     }}>

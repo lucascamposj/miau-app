@@ -46,13 +46,13 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = useCallback(async () => {
     try{
-      await auth().signOut()
       setData({});
       setTargetScreen("")
       await AsyncStorage.removeItem('@MiauApp:user');
+      await auth().signOut()
     } catch(e){
-      Alert.alert("Erro ao sair!")
-      console.error(e)
+      // Alert.alert("Erro ao sair!")
+      console.log(e)
     }
   },[setData])
 
