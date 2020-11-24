@@ -38,13 +38,10 @@ export const AuthProvider = ({ children }) => {
     .doc(doc.user.uid)
     .get();
 
-    // set UID
-    user._data.data.uid = doc.user.uid
-
     // set state
-    setData({user: user._data.data});
+    setData({user: user._data});
     
-    await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(user._data.data));
+    await AsyncStorage.setItem('@MiauApp:user', JSON.stringify(user._data));
   }, [setData]);
 
   const signOut = useCallback(async () => {

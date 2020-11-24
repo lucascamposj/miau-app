@@ -14,14 +14,14 @@ const ListInterestsItem = ({interest, color, ...rest}) => {
   return (
     <SelectInterest {...rest}>
       <Container>
-        {interest.data.photo ?
-          <InterestPhoto source={{uri: interest.data.photo}} />
+        {interest.photo ?
+          <InterestPhoto source={{uri: interest.photo.url}} />
           : 
           <Placeholder/>
         }
         <DescriptionContainer>
-          <Description>{interest.data.name}</Description>
-          <Description>{interest.data.age + " anos"}</Description>
+          <Description>{interest.name}</Description>
+          <Description>{interest.age + " anos"}</Description>
         </DescriptionContainer>
       </Container>
     </SelectInterest>

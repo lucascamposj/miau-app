@@ -193,7 +193,7 @@ const RegisterAnimal = () => {
       
       const url = await storage().ref(`animals/${filename}-${date}`).getDownloadURL();
       setAnimal(oldAnimal => {
-        oldAnimal["photo"] = url
+        oldAnimal["photo"] = {url: url, path: 'animals/' + filename + '-' + date}
         return {...oldAnimal}
       })
       submit();

@@ -41,10 +41,6 @@ const ListInterest = () => {
 
   return (
     <ListInterests loading={loading} interests={interestedUsers}  interestsScreen="PetDetails"/>
-    // <Text>
-    //   {JSON.stringify(interestedUsers)}
-    //   {JSON.stringify(selectedAnimal)}
-    // </Text>
   )
 }
 

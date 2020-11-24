@@ -19,7 +19,7 @@ const ListAnimalsItem = ({animal, color, ...rest}) => {
         </TitleContainer>
 
         {animal.photo ?
-          <AnimalPhoto source={{uri: animal.photo}} />
+          <AnimalPhoto source={{uri: animal.photo.url}} />
           : 
           <Placeholder/>
         }

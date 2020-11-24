@@ -83,7 +83,7 @@ const RegisterPerson = () => {
       
       const url = await storage().ref(`users/${filename}-${date}`).getDownloadURL();
       setPerson(oldPerson => {
-        oldPerson["photo"] = url
+        oldPerson["photo"] = {url: url, path: 'users/' + filename + '-' + date}
         return {...oldPerson}
       })
 

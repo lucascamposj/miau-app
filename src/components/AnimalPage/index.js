@@ -211,7 +211,7 @@ const AnimalPage = ({animal, button, ...rest}) => {
   return (
     <ScrollView>
       {animal.photo ?
-        <AnimalPhoto source={{uri: animal.photo}} />
+        <AnimalPhoto source={{uri: animal.photo.url}} />
       : 
         <Placeholder/>}
 
