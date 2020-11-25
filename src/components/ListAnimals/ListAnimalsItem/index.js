@@ -28,7 +28,7 @@ const ListAnimalsItem = ({animal, color, ...rest}) => {
     if(animal.formType === 'adocao'){
       return "Adoção"
     }
-    return formType;
+    return animal.formType;
   }, [animal]) 
 
 
