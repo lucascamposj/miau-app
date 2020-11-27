@@ -20,7 +20,7 @@ const ListInterests = ({loading, interests, color, interestScreen}) => {
           interest={item} 
           color={color} 
           onPress={() => 
-            navigation.navigate(interestScreen)
+            navigation.navigate('Meus pets', { screen: interestScreen, params: {userUID: item.uid }})
           }
         />
       )}

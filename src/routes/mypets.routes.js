@@ -5,6 +5,8 @@ import PetDetails from '../pages/PetDetails/index.js';
 import RemovePet from '../pages/RemovePet/index.js';
 import Interests from '../pages/Interests/index.js';
 import Hamburguer from '../components/Button/Hamburguer/index.js'
+import FinalizeProcessSuccess from '../pages/FinalizeProcessSuccess/index.js';
+import FinalizeProcess from '../pages/FinalizeProcess/index.js';
 import {useAuth} from '../hooks/auth'
 
 const Stack = createStackNavigator();
@@ -30,6 +32,9 @@ function MyPets() {
     <Stack.Screen name="PetDetails" component={PetDetails} options={{ title: selectedAnimal.name ? capitalizeFirstLetter(selectedAnimal.name) : ""}}  />
     <Stack.Screen name="RemovePet" component={RemovePet} options={{ title: "Remover pet", headerLeft: () =>  <Hamburguer /> }} />
     <Stack.Screen name="Interests" component={Interests} options={{ title: "Interessados"}} />
+    <Stack.Screen name="Finalize" component={FinalizeProcess} options={{ title: "Finalizar Processo"}} />
+    <Stack.Screen name="FinalizeSuccess" component={FinalizeProcessSuccess} options={{ title: "Finalizar Processo", headerLeft: () =>  <Hamburguer /> }} />
+
   </Stack.Navigator>
   );
 }

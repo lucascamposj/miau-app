@@ -14,11 +14,10 @@ const ListInterest = () => {
     if(selectedAnimal.interestedUsers){
       let collection = firestore()
         .collection('usuario')
-        
-      console.log(selectedAnimal.interestedUsers);
-      collection = collection.where('uid', 'in', selectedAnimal.interestedUsers);
       
-      const subscriber = collection
+      if (selectedAnimal.interestedUsers != undefined && selectedAnimal.interestedUsers.length != 0) {
+        collection = collection.where('uid', 'in', selectedAnimal.interestedUsers);
+        const subscriber = collection
         .onSnapshot(querySnapshot => {
           const users = [];
     
@@ -27,20 +26,23 @@ const ListInterest = () => {
               ...documentSnapshot.data(),
               key: documentSnapshot.id,
             });
-            console.log(documentSnapshot.data())
           });
     
           setInterestedUsers(users);
-          setLoading(false);
+
+          // Unsubscribe from events when no longer in use
+          return () => subscriber();
         });
-    
-      // Unsubscribe from events when no longer in use
-      return () => subscriber();
+      } else {
+        setInterestedUsers([]);
+      }
+      
+      setLoading(false);
     }
   }, [selectedAnimal, setInterestedUsers, setLoading]);
 
   return (
-    <ListInterests loading={loading} interests={interestedUsers}  interestsScreen="PetDetails"/>
+    <ListInterests loading={loading} interests={interestedUsers}  interestScreen='Finalize'/>
   )
 }
 
