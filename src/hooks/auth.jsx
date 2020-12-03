@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 const AuthContext = createContext();
 
@@ -30,6 +31,23 @@ export const AuthProvider = ({ children }) => {
     loadStorageData();
   }, []);
 
+  const updateToken = useCallback(async () => {
+    if(data){
+      const tokenNotify = await messaging().getToken();
+
+      await firestore()
+        .collection('usuario')
+        .doc(data.uid)
+        .set({...data,
+          tokenNotify
+        });
+
+      setData(data => ({...data,
+        tokenNotify
+      }))
+    }
+  },[setData, data]);
+
   const signIn  = useCallback(async (email, password) => {
     const doc = await auth().signInWithEmailAndPassword(email, password)
     
@@ -37,6 +55,16 @@ export const AuthProvider = ({ children }) => {
     .collection('usuario')
     .doc(doc.user.uid)
     .get();
+
+    const tokenNotify = await messaging().getToken();
+
+    await firestore()
+      .collection('usuario')
+      .doc(doc.user.uid)
+      .set({...user.data(),
+        uid: doc.user.uid,
+        tokenNotify  
+      })
 
     // set state
     setData({user: user._data});
