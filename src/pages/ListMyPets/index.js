@@ -34,7 +34,7 @@ const ListMyPets = () => {
   }, [user]);
 
   return (
-    <ListAnimals loading={loading} animals={myPets}  animalScreen="PetDetails"/>
+    <ListAnimals loading={loading} animals={myPets}  animalScreen="PetDetails" myPets/>
   )
 }
 

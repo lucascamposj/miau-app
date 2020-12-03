@@ -7,10 +7,11 @@ import {
   DescriptionContainer,
   Container,
   TitleContainer,
+  DescriptionItem,
   SelectAnimal
 } from './styles';
 
-const ListAnimalsItem = ({animal, color, ...rest}) => {
+const ListAnimalsItem = ({animal, color, myPets=false, ...rest}) => {
   
   const interestedUsersParsed = useMemo(() => {
     let quantity = 0;
@@ -45,8 +46,30 @@ const ListAnimalsItem = ({animal, color, ...rest}) => {
           <Placeholder/>
         }
         <DescriptionContainer>
-          <Description>{interestedUsersParsed}</Description>
-          <Description>{formTypeParsed}</Description>
+          {myPets ?
+            <>
+              <Description>
+                <DescriptionItem>{interestedUsersParsed}</DescriptionItem>
+              </Description>
+              <Description>
+                <DescriptionItem>{formTypeParsed}</DescriptionItem>
+              </Description>
+            </>
+            :
+            <>
+              <Description>
+                <DescriptionItem>
+                  {animal.sex}
+                </DescriptionItem>
+                <DescriptionItem>
+                  {animal.age}
+                </DescriptionItem>
+                <DescriptionItem>
+                  {animal.size}
+                </DescriptionItem>
+              </Description>
+            </>
+          }
         </DescriptionContainer>
       </Container>
     </SelectAnimal>

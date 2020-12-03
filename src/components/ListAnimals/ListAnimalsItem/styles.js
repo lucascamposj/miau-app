@@ -51,11 +51,20 @@ export const DescriptionContainer = styled.View`
   justify-content: center;
 `; 
 
-export const Description = styled.Text`
+export const Description = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const DescriptionItem = styled.Text`
   text-transform: uppercase;
   font-size: 12px;
   color: #434343;
   font-family: 'Roboto-Regular';
+  flex: 1;
+  text-align: center;
 `;
 
 export const SelectAnimal = styled.TouchableOpacity`

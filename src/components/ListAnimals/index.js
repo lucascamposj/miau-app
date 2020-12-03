@@ -5,7 +5,7 @@ import {AnimalsList} from './styles';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import {useAuth} from '../../hooks/auth'
 
-const ListAnimals = ({loading, animals, color, animalScreen}) => {
+const ListAnimals = ({loading, animals, color, animalScreen, myPets}) => {
   // hooks context
   const {setSelectedAnimal} = useAuth()
 
@@ -18,7 +18,7 @@ const ListAnimals = ({loading, animals, color, animalScreen}) => {
     <AnimalsList
       data={animals}
       renderItem={({ item }) => (
-        <ListAnimalsItem animal={item} color={color} onPress={() => {setSelectedAnimal(item); navigation.navigate(animalScreen)}}/>
+        <ListAnimalsItem animal={item} color={color} onPress={() => {setSelectedAnimal(item); navigation.navigate(animalScreen)}} myPets={myPets}/>
       )}
     />
   );
